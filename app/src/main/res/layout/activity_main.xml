@@ -4,19 +4,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.arise.common.ming.MainActivity">
+    tools:context="com.arise.common.ming.MainActivity"
+    android:orientation="vertical">
 
-    <TextView
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Test String Request!"
+        android:layout_marginTop="20dp"
+        android:text="@string/test_string_request"
+        android:layout_gravity="center_horizontal"
         android:id="@+id/string_request" />
 
-    <TextView
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Test File Request!"
+        android:text="@string/test_file_request"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
         android:id="@+id/file_request" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/go_config"
+        android:id="@+id/go_config"/>
 
 </LinearLayout>

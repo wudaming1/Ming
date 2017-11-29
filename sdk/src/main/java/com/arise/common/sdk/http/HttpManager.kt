@@ -1,5 +1,7 @@
 package com.arise.common.sdk.http
 
+import android.os.Handler
+import android.os.Looper
 import com.arise.common.sdk.http.callback.DataCallBack
 import com.arise.common.sdk.http.callback.BusinessException
 import com.arise.common.sdk.http.callback.RawCallback
@@ -16,10 +18,12 @@ class HttpManager(private val okHttpClient: OkHttpClient) {
 
     companion object {
         var instance: HttpManager by Delegates.notNull()
+        private lateinit var handler: Handler
     }
 
     init {
         instance = this
+        handler = Handler(Looper.getMainLooper())
     }
 
 
@@ -29,14 +33,18 @@ class HttpManager(private val okHttpClient: OkHttpClient) {
         execute(request, object : RawCallback {
             override fun onSuccess(result: Response) {
                 if (result.body()?.string().isNullOrEmpty()) {
-                    realCallback.onFail(BusinessException("body empty!", BusinessException.CODE_BODY_EMPTY))
+                    handler.post {
+                        realCallback.onFail(BusinessException("body empty!", BusinessException.CODE_BODY_EMPTY))
+                    }
                 } else {
-                    realCallback.onSuccess(result.body()?.string() ?: "")
+                    handler.post { realCallback.onSuccess(result.body()?.string() ?: "") }
+
                 }
             }
 
             override fun onError(exception: BusinessException) {
-                realCallback.onFail(exception)
+                handler.post { realCallback.onFail(exception) }
+
             }
 
         })
@@ -47,17 +55,19 @@ class HttpManager(private val okHttpClient: OkHttpClient) {
         execute(request, object : RawCallback {
             override fun onSuccess(result: Response) {
                 if (result.body()?.byteStream() == null) {
-                    realCallback.onFail(BusinessException("body empty!", BusinessException.CODE_BODY_EMPTY))
+                    handler.post { realCallback.onFail(BusinessException("body empty!", BusinessException.CODE_BODY_EMPTY)) }
+
                 } else {
                     val inStream = result.body()!!.byteStream()
                     val file = FileUtil.writeFileFromStream(inStream, path)
-                    realCallback.onSuccess(file)
+                    handler.post { realCallback.onSuccess(file) }
+
 
                 }
             }
 
             override fun onError(exception: BusinessException) {
-                realCallback.onFail(exception)
+                handler.post { realCallback.onFail(exception) }
             }
 
         })
@@ -71,7 +81,11 @@ class HttpManager(private val okHttpClient: OkHttpClient) {
     private fun execute(request: Request, callback: RawCallback) {
         okHttpClient.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
-                callback.onError(BusinessException(BusinessException.MESSAGE_NO_NET_ERROR, BusinessException.CODE_NO_NET_ERROR))
+                if (call.isCanceled) {
+                    callback.onError(BusinessException("被取消了", BusinessException.CODE_CANCEL))
+                } else {
+                    callback.onError(BusinessException(e.message ?: BusinessException.MESSAGE_NO_NET_ERROR, BusinessException.CODE_NO_NET_ERROR))
+                }
             }
 
             override fun onResponse(call: Call, response: Response) {
