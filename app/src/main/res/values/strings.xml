@@ -1,7 +1,13 @@
 <resources>
     <string name="app_name">Ming</string>
-    <string name="test_string_request">Test String Request!</string>
+    <string name="go_login">去登录</string>
     <string name="test_file_request">Test File Request!</string>
     <string name="confirm">确定</string>
     <string name="go_config">配置server地址</string>
+
+    <!--用户相关-->
+    <string name="btn_login">登录</string>
+    <string name="btn_register">立即注册</string>
+    <string name="user_name">用户名</string>
+    <string name="password">密码</string>
 </resources>

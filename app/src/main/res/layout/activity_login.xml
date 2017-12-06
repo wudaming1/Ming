@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModule"
+            type="com.arise.common.ming.user.login.LoginVM"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="8dp"
+        android:orientation="vertical"
+        tools:context="com.arise.common.ming.user.login.LoginActivity">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            android:inputType="text"
+            android:hint="@string/user_name"
+            android:text="@={viewModule.name}"
+            android:id="@+id/name"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:inputType="textPassword"
+            android:hint="@string/password"
+            android:text="@={viewModule.password}"
+            android:id="@+id/password"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:id="@+id/login"
+                android:background="@color/bg_196e6e6e"
+                android:textColor="@color/font_989898"
+                android:onClick="@{viewModule::onClick}"
+                android:text="@string/btn_login"/>
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:id="@+id/register"
+                android:background="@color/bg_196e6e6e"
+                android:textColor="@color/font_989898"
+                android:onClick="@{viewModule::onClick}"
+                android:text="@string/btn_register"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>
+

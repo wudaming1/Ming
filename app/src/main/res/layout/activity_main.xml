@@ -11,17 +11,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="@string/test_string_request"
+        android:text="@string/go_login"
         android:layout_gravity="center_horizontal"
-        android:id="@+id/string_request" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/test_file_request"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"
-        android:id="@+id/file_request" />
+        android:id="@+id/go_login" />
 
     <Button
         android:layout_width="wrap_content"

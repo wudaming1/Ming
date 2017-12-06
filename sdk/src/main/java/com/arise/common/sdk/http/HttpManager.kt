@@ -76,7 +76,40 @@ class HttpManager(private val okHttpClient: OkHttpClient) {
 
     fun doPost(url: String, realCallback: DataCallBack<File>, path: String) {
 
+
     }
+
+    fun doPost(url:String,params:Map<String,String>,realCallback: DataCallBack<String>){
+        val builder = FormBody.Builder()
+        for ((key,value) in params){
+            builder.add(key,value)
+        }
+        val body = builder.build()
+        val request = Request.Builder().url(url).post(body).build()
+
+        execute(request,object :RawCallback{
+            override fun onSuccess(result: Response) {
+                val message = result.body()?.string()
+                if (message.isNullOrEmpty()) {
+                    handler.post {
+                        realCallback.onFail(BusinessException("body empty!", BusinessException.CODE_BODY_EMPTY))
+                    }
+                } else {
+                    handler.post { realCallback.onSuccess(message?:" ") }
+
+                }
+            }
+
+            override fun onError(exception: BusinessException) {
+                handler.post { realCallback.onFail(exception) }
+
+            }
+
+        })
+
+    }
+
+
 
     private fun execute(request: Request, callback: RawCallback) {
         okHttpClient.newCall(request).enqueue(object : Callback {

@@ -14,9 +14,9 @@ object HttpConfig {
 
     init {
         base_url = if (BuildConfig.DEBUG) {
-            "http://172.28.16.135:8080/aries"
+            "http://172.28.17.29:8080/Servlet"
         } else {
-            "http://172.28.17.176:8080/aries"
+            "http://172.28.17.176:8080/Servlet"
         }
     }
 }
