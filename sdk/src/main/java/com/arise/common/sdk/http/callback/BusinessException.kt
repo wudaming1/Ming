@@ -12,5 +12,7 @@ class BusinessException(override var message: String, val code: Int) : Exception
 
         val CODE_CANCEL = 701
         val CODE_BODY_EMPTY = 702
+
+        val JSON_PARSE_ERROR = 703
     }
 }

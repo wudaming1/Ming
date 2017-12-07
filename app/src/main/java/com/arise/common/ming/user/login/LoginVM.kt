@@ -5,8 +5,11 @@ import android.view.View
 import android.widget.Toast
 import com.arise.common.ming.MyApplication
 import com.arise.common.ming.R
-import com.arise.common.ming.base.HttpResultBean
+import com.arise.common.ming.http.HttpResultBean
 import com.arise.common.ming.config.HttpConfig
+import com.arise.common.ming.http.Method
+import com.arise.common.ming.http.MyHttpRequest
+import com.arise.common.ming.http.callback.ActionCallback
 import com.arise.common.sdk.http.HttpManager
 import com.arise.common.sdk.http.callback.BusinessException
 import com.arise.common.sdk.http.callback.DataCallBack
@@ -25,12 +28,12 @@ class LoginVM : View.OnClickListener {
 
 
     override fun onClick(v: View) {
-        if (name.get().isNullOrEmpty()){
+        if (name.get().isNullOrEmpty()) {
             Toast.makeText(MyApplication.instance, "用户名不能为空", Toast.LENGTH_LONG).show()
             return
         }
 
-        if (password.get().isNullOrEmpty()){
+        if (password.get().isNullOrEmpty()) {
             Toast.makeText(MyApplication.instance, "密码不能为空", Toast.LENGTH_LONG).show()
             return
         }
@@ -40,32 +43,32 @@ class LoginVM : View.OnClickListener {
         map.put("password", password.get())
         when (v.id) {
             R.id.login -> {
-                HttpManager.instance.doPost(login_url, map, object : DataCallBack<String> {
-                    override fun onFail(exception: BusinessException) {
+                MyHttpRequest<String>(login_url, object : ActionCallback {
+                    override fun onError(exception: BusinessException) {
                         Toast.makeText(MyApplication.instance, exception.message, Toast.LENGTH_LONG).show()
                     }
 
-                    override fun onSuccess(result: String) {
-                        val resultBean = JsonUtil.readValue<HttpResultBean>(result)
-                        Toast.makeText(MyApplication.instance, resultBean.toString(), Toast.LENGTH_LONG).show()
-
+                    override fun onSuccess(result: Any?) {
+                        result?.apply {
+                            Toast.makeText(MyApplication.instance, result.toString(), Toast.LENGTH_LONG).show()
+                        }
                     }
 
-                })
+                }, Method.POST).execute()
             }
             R.id.register -> {
-                HttpManager.instance.doPost(register_url, map, object : DataCallBack<String> {
-                    override fun onFail(exception: BusinessException) {
+                MyHttpRequest<String>(register_url, object : ActionCallback {
+                    override fun onError(exception: BusinessException) {
                         Toast.makeText(MyApplication.instance, exception.message, Toast.LENGTH_LONG).show()
                     }
 
-                    override fun onSuccess(result: String) {
-                        val resultBean = JsonUtil.readValue<HttpResultBean>(result)
-                        Toast.makeText(MyApplication.instance, resultBean.toString(), Toast.LENGTH_LONG).show()
-
+                    override fun onSuccess(result: Any?) {
+                        result?.apply {
+                            Toast.makeText(MyApplication.instance, result.toString(), Toast.LENGTH_LONG).show()
+                        }
                     }
 
-                })
+                }, Method.POST).execute()
             }
         }
     }

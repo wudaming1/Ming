@@ -5,9 +5,9 @@ import com.arise.common.sdk.http.callback.BusinessException
 /**
  * 最终网络请求回调
  */
-interface ActionCallback<in T> {
+interface ActionCallback {
 
     fun onError(exception: BusinessException)
 
-    fun onSuccess(result: T)
+    fun onSuccess(result: Any?)
 }

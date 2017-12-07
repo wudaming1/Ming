@@ -6,5 +6,5 @@ package com.arise.common.sdk.http.callback
 interface DataCallBack<in T>{
     fun onFail(exception: BusinessException)
 
-    fun onSuccess(result: T)
+    fun onSuccess(resp: T)
 }
