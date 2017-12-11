@@ -1,10 +1,10 @@
 package com.arise.common.ming.base
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Window
+import com.arise.common.sdk.base.BaseActivity
 
-open class BaseActivity : AppCompatActivity() {
+open class MyBaseActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
