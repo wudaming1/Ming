@@ -1,6 +1,7 @@
 package com.arise.common.sdk
 
 import android.app.Application
+import com.arise.common.sdk.http.HeaderInterceptor
 import com.arise.common.sdk.http.WriteCacheControllInterceptor
 import com.arise.common.sdk.utils.FileUtil.CACHE_PATH
 import com.arise.common.sdk.utils.FileUtil
@@ -18,6 +19,7 @@ open class BaseApplication : Application() {
 
     companion object {
         var baseInstance: BaseApplication by Delegates.notNull()
+        val headers = hashMapOf<String,String>()
     }
 
     lateinit var httpClient: OkHttpClient
@@ -41,6 +43,7 @@ open class BaseApplication : Application() {
                 .readTimeout(60, TimeUnit.SECONDS)
                 .cache(cache)
                 .addInterceptor(WriteCacheControllInterceptor())
+                .addInterceptor(HeaderInterceptor())
                 .build()
     }
 }

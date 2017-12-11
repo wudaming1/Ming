@@ -17,7 +17,8 @@ object PreferenceManager {
         preferenceHelp.putString("token", token)
     }
 
-    fun getToken() = { preferenceHelp.getString("token") }
+    fun getToken():String {
+        return preferenceHelp.getString("token") }
 
 
     fun saveUserName(name: String) {

@@ -1,5 +1,6 @@
 package com.arise.common.sdk.http
 
+import com.arise.common.sdk.BaseApplication
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
@@ -18,6 +19,19 @@ class WriteCacheControllInterceptor : Interceptor {
                     .header("Cache-Control", "public, only-if-cached, max-stale=2419200")
                     .removeHeader("Pragma")
                     .build()
+    }
+
+}
+
+
+class HeaderInterceptor:Interceptor{
+
+    override fun intercept(chain: Interceptor.Chain): Response {
+        val builder = chain.request().newBuilder()
+        for((key,value) in BaseApplication.headers){
+            builder.addHeader(key,value)
+        }
+        return chain.proceed(builder.build())
     }
 
 }
