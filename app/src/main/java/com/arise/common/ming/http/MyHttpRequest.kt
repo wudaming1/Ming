@@ -25,7 +25,11 @@ class MyHttpRequest<T : Any>(private val url: String, private val method: Method
 
     constructor(url: String, callback: ActionCallback, method: Method = Method.GET) : this(url, method) {
         actionCallback = callback
-        this.path = path
+    }
+
+    constructor(url: String,map: HashMap<String,String>, callback: ActionCallback, method: Method = Method.GET) : this(url, method) {
+        actionCallback = callback
+        this.map.putAll(map)
     }
 
     fun setclazz(clazz: Class<T>): MyHttpRequest<T> {

@@ -43,7 +43,7 @@ class LoginVM : View.OnClickListener {
         map.put("password", password.get())
         when (v.id) {
             R.id.login -> {
-                MyHttpRequest<String>(login_url, object : ActionCallback {
+                MyHttpRequest<String>(login_url,map, object : ActionCallback {
                     override fun onError(exception: BusinessException) {
                         Toast.makeText(MyApplication.instance, exception.message, Toast.LENGTH_LONG).show()
                     }
@@ -57,7 +57,7 @@ class LoginVM : View.OnClickListener {
                 }, Method.POST).execute()
             }
             R.id.register -> {
-                MyHttpRequest<String>(register_url, object : ActionCallback {
+                MyHttpRequest<String>(register_url,map, object : ActionCallback {
                     override fun onError(exception: BusinessException) {
                         Toast.makeText(MyApplication.instance, exception.message, Toast.LENGTH_LONG).show()
                     }

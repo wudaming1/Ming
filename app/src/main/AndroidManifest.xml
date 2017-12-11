@@ -19,6 +19,7 @@
         </activity>
         <activity android:name=".config.ConfigActivity" />
         <activity android:name=".user.login.LoginActivity" />
+        <activity android:name=".base.BaseActivity"></activity>
     </application>
 
 </manifest>

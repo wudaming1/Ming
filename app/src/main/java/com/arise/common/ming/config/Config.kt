@@ -14,7 +14,7 @@ object HttpConfig {
 
     init {
         base_url = if (BuildConfig.DEBUG) {
-            "http://172.28.17.29:8080/Servlet"
+            "http://172.28.19.179:8080/Servlet"
         } else {
             "http://172.28.17.176:8080/Servlet"
         }
