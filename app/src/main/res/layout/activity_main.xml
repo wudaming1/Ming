@@ -15,14 +15,6 @@
         tools:context="com.arise.common.ming.home.MainActivity">
 
         <Button
-            android:id="@+id/go_login"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
-            android:text="@string/go_login" />
-
-        <Button
             android:id="@+id/go_config"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -36,13 +28,7 @@
         android:layout_width="300dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="@color/colorAccent">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="这个是侧边栏"/>
-
-    </RelativeLayout>
+        android:background="@color/colorAccent"
+        android:id="@+id/left_menu" />
 
 </android.support.v4.widget.DrawerLayout>

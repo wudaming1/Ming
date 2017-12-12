@@ -24,6 +24,9 @@ class WriteCacheControllInterceptor : Interceptor {
 }
 
 
+/**
+ * 统一添加Request的header部分的拦截器
+ */
 class HeaderInterceptor:Interceptor{
 
     override fun intercept(chain: Interceptor.Chain): Response {

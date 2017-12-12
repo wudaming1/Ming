@@ -1,6 +1,7 @@
 package com.arise.common.ming.config
 
 import com.arise.common.ming.BuildConfig
+import com.arise.common.ming.user.UserBean
 
 /**
  * 全局配置信息
@@ -19,4 +20,10 @@ object HttpConfig {
             "http://172.28.17.176:8080/Servlet"
         }
     }
+}
+
+object UserConfig {
+    var islogin = false
+    var user: UserBean? = null
+
 }

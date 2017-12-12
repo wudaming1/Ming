@@ -6,6 +6,7 @@ import com.arise.common.sdk.http.WriteCacheControllInterceptor
 import com.arise.common.sdk.utils.FileUtil.CACHE_PATH
 import com.arise.common.sdk.utils.FileUtil
 import com.arise.common.sdk.utils.FileUtil.NET_CACHE_PATH
+import com.facebook.drawee.backends.pipeline.Fresco
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import java.io.File
@@ -28,7 +29,7 @@ open class BaseApplication : Application() {
         super.onCreate()
         baseInstance = this
         initHttpClient()
-
+        Fresco.initialize(this)
     }
 
 

@@ -4,31 +4,54 @@ import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
 import com.arise.common.ming.R
 import com.arise.common.ming.base.MyBaseFragment
+import com.arise.common.ming.config.UserConfig
+import com.arise.common.ming.user.unlogin.UnLoginFragment
+import com.arise.common.sdk.utils.FrescoUtil
+import kotlinx.android.synthetic.main.fragment_user.*
 
 /**
+ * 这个Fragment被载入DrawerLayout的start侧边栏，在侧边栏被拉出拉入的时候并没有触发任何生命周期回调。
+ * 所以需要通过宿主来传递这个消息。
  * A simple [Fragment] subclass.
  * Activities that contain this fragment must implement the
  * [UserFragment.OnFragmentInteractionListener] interface
  * to handle interaction events.
  * Use the [UserFragment.newInstance] factory method to
  * create an instance of this fragment.
+ *
+ * --onAttach           --这个之所以是第一个触发的是应为往后的声明周期函数可能要用到Context
+ * --onCreate           --这个方法触发时无法判断Activity是否创建完成，所以无法使用Activity的页面信息
+ * --onCreateView       --创建Fragment的UI界面
+ * --onActivityCreated  --在这个地方可以确定Activity已经创建完成，可以使用Activity的页面信息
+ * --onStart            --用户可见，依赖于Activity的onStart
+ * --onResume           --可交互，依赖于Activity的onResume
+ * --onPause            --上个阶段结束，任然可见，依赖于Activity的onPause
+ * --onStop             --onStart结束，不可见，依赖于Activity的onStop
+ * --onDestroyView      --分离在onCreateView期间绑定的View界面。
+ * --onDestroy          --销毁，当前实例不在可用，在onStop和onDetach期间调用
+ * --onDetach           --与Activity分离完成后调用。
+ *
  */
 class UserFragment : MyBaseFragment() {
 
+    private val TAG = UserFragment::class.java.simpleName
     // TODO: Rename and change types of parameters
     private var mParam1: String? = null
     private var mParam2: String? = null
 
     private var mListener: OnFragmentInteractionListener? = null
 
+    private lateinit var unloginFragment:UnLoginFragment
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.e(TAG,"onCreate")
         if (arguments != null) {
             mParam1 = arguments.getString(ARG_PARAM1)
             mParam2 = arguments.getString(ARG_PARAM2)
@@ -37,9 +60,40 @@ class UserFragment : MyBaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+        Log.e(TAG,"onCreateView")
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_user, container, false)
     }
+
+    /**
+     * 声明周期方法中，唯一一个不是成对的方法。
+     */
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        Log.e(TAG,"onActivityCreated")
+        unloginFragment = UnLoginFragment()
+        val ft = childFragmentManager.beginTransaction()
+        ft.add(R.id.unlogin,unloginFragment)
+        ft.commit()
+        refreshLoginState()
+
+    }
+
+    fun refreshLoginState(){
+        if (UserConfig.islogin){
+            group_header.visibility = View.VISIBLE
+            UserConfig.user?.apply {
+                user_name.text = userName
+                imgUrl?.apply { FrescoUtil.loadNetPic(header_image,imgUrl) }
+            }
+            hideFragment(unloginFragment)
+        }else{
+            group_header.visibility = View.GONE
+            showFragment(unloginFragment)
+
+        }
+    }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri) {
@@ -50,6 +104,7 @@ class UserFragment : MyBaseFragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+        Log.e(TAG,"onAttach")
         if (context is OnFragmentInteractionListener) {
             mListener = context
         } else {
@@ -57,8 +112,13 @@ class UserFragment : MyBaseFragment() {
         }
     }
 
+    override fun getName(): String {
+        return TAG
+    }
+
     override fun onDetach() {
         super.onDetach()
+        Log.e(TAG,"onDetach")
         mListener = null
     }
 
