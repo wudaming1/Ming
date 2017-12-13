@@ -1,6 +1,8 @@
 package com.arise.common.ming.http
 
+import com.arise.common.ming.config.UserConfig
 import com.arise.common.ming.http.callback.ActionCallback
+import com.arise.common.ming.user.login.LoginActivity
 import com.arise.common.sdk.http.HttpManager
 import com.arise.common.sdk.http.callback.BusinessException
 import com.arise.common.sdk.http.callback.DataCallBack
@@ -55,6 +57,10 @@ class MyHttpRequest<T : Any>(private val url: String, private val method: Method
             HttpResultCode.FAIL -> actionCallback?.onError(BusinessException(resultBean.message, resultBean.resultCode))
             HttpResultCode.DATABASE_ERR -> actionCallback?.onError(BusinessException(resultBean.message, resultBean.resultCode))
             HttpResultCode.PARAM_ERR -> actionCallback?.onError(BusinessException(resultBean.message, resultBean.resultCode))
+            HttpResultCode.TOKEN_INVALID ->{
+                UserConfig.loginOut()
+                LoginActivity.goLogin()
+            }
             HttpResultCode.SUCCESS -> {
                 if (clazz == null) {
                     actionCallback?.onSuccess(resultBean.data)

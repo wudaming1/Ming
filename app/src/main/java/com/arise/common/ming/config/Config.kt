@@ -1,6 +1,7 @@
 package com.arise.common.ming.config
 
 import com.arise.common.ming.BuildConfig
+import com.arise.common.ming.base.PreferenceManager
 import com.arise.common.ming.user.UserBean
 
 /**
@@ -25,5 +26,12 @@ object HttpConfig {
 object UserConfig {
     var islogin = false
     var user: UserBean? = null
+
+
+    fun loginOut(){
+        islogin = false
+        user = null
+        PreferenceManager.saveToken("")
+    }
 
 }

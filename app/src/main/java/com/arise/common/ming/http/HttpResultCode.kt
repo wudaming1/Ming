@@ -9,5 +9,6 @@ object HttpResultCode{
     val SUCCESS = 0
     val PARAM_ERR = 1
     val DATABASE_ERR = 2
+    val TOKEN_INVALID = 3
 
 }

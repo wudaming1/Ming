@@ -31,8 +31,7 @@ class UnLoginFragment : MyBaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         go_login.setOnClickListener {
-            val intent = Intent(activity, LoginActivity::class.java)
-            activity.startActivity(intent)
+            LoginActivity.goLogin()
         }
     }
 

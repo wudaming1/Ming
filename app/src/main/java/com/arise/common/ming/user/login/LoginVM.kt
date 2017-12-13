@@ -5,23 +5,23 @@ import android.view.View
 import android.widget.Toast
 import com.arise.common.ming.MyApplication
 import com.arise.common.ming.R
-import com.arise.common.ming.http.HttpResultBean
+import com.arise.common.ming.base.PreferenceManager
 import com.arise.common.ming.config.HttpConfig
+import com.arise.common.ming.config.UserConfig
 import com.arise.common.ming.http.Method
 import com.arise.common.ming.http.MyHttpRequest
 import com.arise.common.ming.http.callback.ActionCallback
-import com.arise.common.sdk.http.HttpManager
-import com.arise.common.sdk.http.callback.BusinessException
-import com.arise.common.sdk.http.callback.DataCallBack
-import com.arise.common.sdk.utils.JsonUtil
+import com.arise.common.ming.user.UserBean
+
 
 /**
  * 登录
  */
-class LoginVM : View.OnClickListener {
+class LoginVM(val loginActivity: LoginActivity) : View.OnClickListener {
 
-    private val login_url = HttpConfig.base_url + "/login"
-    private val register_url = HttpConfig.base_url + "/register"
+    private val loginUrl = HttpConfig.base_url + "/login"
+    private val registerUrl = HttpConfig.base_url + "/register"
+    private val userInfoUrl = HttpConfig.base_url + "/auth/userInfo"
 
     var name = ObservableField<String>()
     var password = ObservableField<String>()
@@ -43,33 +43,41 @@ class LoginVM : View.OnClickListener {
         map.put("password", password.get())
         when (v.id) {
             R.id.login -> {
-                MyHttpRequest<String>(login_url,map, object : ActionCallback {
-                    override fun onError(exception: BusinessException) {
-                        Toast.makeText(MyApplication.instance, exception.message, Toast.LENGTH_LONG).show()
-                    }
-
+                MyHttpRequest<String>(loginUrl, map, object : ActionCallback {
                     override fun onSuccess(result: Any?) {
                         result?.apply {
-                            Toast.makeText(MyApplication.instance, result.toString(), Toast.LENGTH_LONG).show()
+                            authSuccess(result.toString())
                         }
                     }
 
                 }, Method.POST).execute()
             }
             R.id.register -> {
-                MyHttpRequest<String>(register_url,map, object : ActionCallback {
-                    override fun onError(exception: BusinessException) {
-                        Toast.makeText(MyApplication.instance, exception.message, Toast.LENGTH_LONG).show()
-                    }
-
+                MyHttpRequest<String>(registerUrl, map, object : ActionCallback {
                     override fun onSuccess(result: Any?) {
                         result?.apply {
-                            Toast.makeText(MyApplication.instance, result.toString(), Toast.LENGTH_LONG).show()
+                            authSuccess(result.toString())
                         }
                     }
 
                 }, Method.POST).execute()
             }
         }
+    }
+
+    private fun authSuccess(token: String) {
+        PreferenceManager.saveToken(token)
+        UserConfig.islogin = true
+        Toast.makeText(MyApplication.instance, token, Toast.LENGTH_LONG).show()
+        MyHttpRequest<UserBean>(userInfoUrl, object : ActionCallback {
+
+            override fun onSuccess(result: Any?) {
+                if (result is UserBean) {
+                    UserConfig.user = result
+                    loginActivity.finish()
+                }
+            }
+        }, Method.GET).execute()
+
     }
 }
