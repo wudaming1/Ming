@@ -2,7 +2,7 @@ package com.arise.common.ming.config
 
 import com.arise.common.ming.BuildConfig
 import com.arise.common.ming.base.PreferenceManager
-import com.arise.common.ming.user.UserBean
+import com.arise.common.ming.user.UserInfoBean
 
 /**
  * 全局配置信息
@@ -25,7 +25,7 @@ object HttpConfig {
 
 object UserConfig {
     var islogin = false
-    var user: UserBean? = null
+    var user: UserInfoBean? = null
 
 
     fun loginOut(){

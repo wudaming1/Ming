@@ -8,25 +8,17 @@ import android.support.v4.app.Fragment
 abstract class BaseFragment : Fragment() {
 
     fun showFragment(fragment: BaseFragment) {
-        if (childFragmentManager.fragments.contains(fragment)) {
-            val ft = childFragmentManager.beginTransaction()
-            ft.show(fragment)
-            ft.commit()
-            fragment.onVisibleChange(true)
-        } else {
-            throw Exception(fragment.getName() + "is not in this FragmentManager,please check!")
-        }
+        val ft = childFragmentManager.beginTransaction()
+        ft.show(fragment)
+        ft.commit()
+        fragment.onVisibleChange(true)
     }
 
     fun hideFragment(fragment: BaseFragment) {
-        if (childFragmentManager.fragments.contains(fragment)) {
-            val ft = childFragmentManager.beginTransaction()
-            ft.hide(fragment)
-            ft.commit()
-            fragment.onVisibleChange(false)
-        } else {
-            throw Exception(fragment.getName() + "is not in this FragmentManager,please check!")
-        }
+        val ft = childFragmentManager.beginTransaction()
+        ft.hide(fragment)
+        ft.commit()
+        fragment.onVisibleChange(false)
     }
 
     override fun onStart() {

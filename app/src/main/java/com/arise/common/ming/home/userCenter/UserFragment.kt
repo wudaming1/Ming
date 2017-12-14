@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.arise.common.ming.ImmersiveUtil
 import com.arise.common.ming.R
 import com.arise.common.ming.base.MyBaseFragment
 import com.arise.common.ming.config.UserConfig
@@ -41,6 +42,9 @@ import kotlinx.android.synthetic.main.fragment_user.*
 class UserFragment : MyBaseFragment() {
 
     private val TAG = UserFragment::class.java.simpleName
+
+    private lateinit var rootView:View
+
     // TODO: Rename and change types of parameters
     private var mParam1: String? = null
     private var mParam2: String? = null
@@ -62,7 +66,8 @@ class UserFragment : MyBaseFragment() {
                               savedInstanceState: Bundle?): View? {
         Log.e(TAG,"onCreateView")
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_user, container, false)
+        rootView = inflater.inflate(R.layout.fragment_user, container, false)
+        return rootView
     }
 
     /**
@@ -70,7 +75,8 @@ class UserFragment : MyBaseFragment() {
      */
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        Log.e(TAG,"onActivityCreated")
+        //todo 添加padding来空出状态栏
+        ImmersiveUtil.makeSpaceForImmersive(rootView)
         unloginFragment = UnLoginFragment()
         val ft = childFragmentManager.beginTransaction()
         ft.add(R.id.unlogin,unloginFragment)

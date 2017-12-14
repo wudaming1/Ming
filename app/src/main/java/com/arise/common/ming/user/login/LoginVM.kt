@@ -11,7 +11,7 @@ import com.arise.common.ming.config.UserConfig
 import com.arise.common.ming.http.Method
 import com.arise.common.ming.http.MyHttpRequest
 import com.arise.common.ming.http.callback.ActionCallback
-import com.arise.common.ming.user.UserBean
+import com.arise.common.ming.user.UserInfoBean
 
 
 /**
@@ -69,10 +69,10 @@ class LoginVM(val loginActivity: LoginActivity) : View.OnClickListener {
         PreferenceManager.saveToken(token)
         UserConfig.islogin = true
         Toast.makeText(MyApplication.instance, token, Toast.LENGTH_LONG).show()
-        MyHttpRequest<UserBean>(userInfoUrl, object : ActionCallback {
+        MyHttpRequest<UserInfoBean>(userInfoUrl, object : ActionCallback {
 
             override fun onSuccess(result: Any?) {
-                if (result is UserBean) {
+                if (result is UserInfoBean) {
                     UserConfig.user = result
                     loginActivity.finish()
                 }
