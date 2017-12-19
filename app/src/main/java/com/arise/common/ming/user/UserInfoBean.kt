@@ -7,5 +7,5 @@ import com.arise.common.ming.base.BaseBean
  */
 data class UserInfoBean(val userName:String,
                         val imgUrl:String? = null,
-                        val sex:String,
-                        val birthday:Long):BaseBean()
+                        val sex:String?=null,
+                        val birthday:Long?=null):BaseBean()

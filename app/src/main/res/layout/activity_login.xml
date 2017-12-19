@@ -46,7 +46,7 @@
                 android:layout_weight="1"
                 android:id="@+id/login"
                 android:background="@color/bg_196e6e6e"
-                android:textColor="@color/font_989898"
+                android:textColor="@color/font_gray"
                 android:onClick="@{viewModule::onClick}"
                 android:text="@string/btn_login"/>
 
@@ -56,7 +56,7 @@
                 android:layout_weight="1"
                 android:id="@+id/register"
                 android:background="@color/bg_196e6e6e"
-                android:textColor="@color/font_989898"
+                android:textColor="@color/font_gray"
                 android:onClick="@{viewModule::onClick}"
                 android:text="@string/btn_register"/>
 

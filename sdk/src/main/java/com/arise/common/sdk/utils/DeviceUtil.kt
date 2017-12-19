@@ -1,6 +1,7 @@
 package com.arise.common.sdk.utils
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
 import android.net.wifi.WifiManager
@@ -45,6 +46,7 @@ object DeviceUtil{
     }
 
 
+    @SuppressLint("HardwareIds")
     fun generateDeviceId(): String {
         val tm = BaseApplication.Companion.baseInstance.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
         if (ContextCompat.checkSelfPermission(BaseApplication.Companion.baseInstance, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {

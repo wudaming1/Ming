@@ -20,6 +20,6 @@ object ImmersiveUtil {
      * @param view:当前页面的顶层view，使用这个view的topPadding来给状态栏留出空间
      */
     fun makeSpaceForImmersive(view: View){
-        view.setPadding(0,0, getStatusBarHeightForImmersive(),0)
+        view.setPadding(view.paddingLeft,view.paddingTop+getStatusBarHeightForImmersive(),view.paddingRight ,view.paddingBottom)
     }
 }

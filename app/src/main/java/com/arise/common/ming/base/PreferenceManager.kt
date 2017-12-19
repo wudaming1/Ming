@@ -13,6 +13,15 @@ object PreferenceManager {
     private val preferenceHelp = PreferenceManagerHelp(MyApplication.instance.getSharedPreferences("user", Context.MODE_PRIVATE))
 
 
+    fun saveDebugHttpUrl(url:String){
+        preferenceHelp.putString("url",url)
+    }
+
+    fun getDebugHttpUrl():String{
+        return preferenceHelp.getString("url","http://172.28.19.179:8080/Servlet")
+    }
+
+
     fun saveToken(token: String) {
         preferenceHelp.putString("token", token)
     }

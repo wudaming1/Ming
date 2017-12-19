@@ -68,13 +68,15 @@ class LoginVM(val loginActivity: LoginActivity) : View.OnClickListener {
     private fun authSuccess(token: String) {
         PreferenceManager.saveToken(token)
         UserConfig.islogin = true
-        Toast.makeText(MyApplication.instance, token, Toast.LENGTH_LONG).show()
+        Toast.makeText(MyApplication.instance, token, Toast.LENGTH_SHORT).show()
         MyHttpRequest<UserInfoBean>(userInfoUrl, object : ActionCallback {
 
             override fun onSuccess(result: Any?) {
                 if (result is UserInfoBean) {
                     UserConfig.user = result
                     loginActivity.finish()
+                }else{
+                    Toast.makeText(MyApplication.instance, result?.toString()?:"", Toast.LENGTH_SHORT).show()
                 }
             }
         }, Method.GET).execute()

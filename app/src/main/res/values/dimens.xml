@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="divider_height">1px</dimen>
+
+
+
+    <!--font,按照大小递减h1,h2,h3...-->
+    <!--页面标题-->
+    <dimen name="h1">20dp</dimen>
+    <!--组块标题-->
+    <dimen name="h2">18dp</dimen>
+    <!--正文文字-->
+    <dimen name="h3">16dp</dimen>
+    <!--小号文字-->
+    <dimen name="h4">14dp</dimen>
+    <!--不醒目的提示-->
+    <dimen name="h5">12dp</dimen>
+
+
+</resources>

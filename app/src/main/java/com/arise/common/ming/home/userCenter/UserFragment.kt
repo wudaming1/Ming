@@ -1,6 +1,7 @@
 package com.arise.common.ming.home.userCenter
 
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -12,8 +13,10 @@ import com.arise.common.ming.ImmersiveUtil
 import com.arise.common.ming.R
 import com.arise.common.ming.base.MyBaseFragment
 import com.arise.common.ming.config.UserConfig
+import com.arise.common.ming.user.info.UserInfoActivity
 import com.arise.common.ming.user.unlogin.UnLoginFragment
 import com.arise.common.sdk.utils.FrescoUtil
+import com.orhanobut.logger.Logger
 import kotlinx.android.synthetic.main.fragment_user.*
 
 /**
@@ -55,7 +58,6 @@ class UserFragment : MyBaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.e(TAG,"onCreate")
         if (arguments != null) {
             mParam1 = arguments.getString(ARG_PARAM1)
             mParam2 = arguments.getString(ARG_PARAM2)
@@ -88,6 +90,10 @@ class UserFragment : MyBaseFragment() {
     fun refreshLoginState(){
         if (UserConfig.islogin){
             group_header.visibility = View.VISIBLE
+            group_header.setOnClickListener{
+                val intent = Intent(activity,UserInfoActivity::class.java)
+                activity.startActivity(intent)
+            }
             UserConfig.user?.apply {
                 user_name.text = userName
                 imgUrl?.apply { FrescoUtil.loadNetPic(header_image,imgUrl) }

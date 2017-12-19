@@ -7,14 +7,16 @@ buildscript {
      * 定义好之后，后面的存取就不需要ext前缀了。ext属性支持Project和Gradle对象。
      * 即Project和Gradle对象都可以设置ext属性
      */
-    ext.kotlin_version = '1.2.0'
+    ext.kotlin_version = '1.2.10'
     repositories {
         google()
         jcenter()
+        mavenCentral()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.jakewharton:butterknife-gradle-plugin:8.8.1'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -25,6 +27,7 @@ allprojects {
     repositories {
         google()
         jcenter()
+        mavenCentral()
     }
 }
 

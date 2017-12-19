@@ -5,6 +5,7 @@ import android.os.Looper
 import com.arise.common.sdk.http.callback.DataCallBack
 import com.arise.common.sdk.http.callback.BusinessException
 import com.arise.common.sdk.http.callback.RawCallback
+import com.arise.common.sdk.http.callback.StringCallBack
 import com.arise.common.sdk.utils.FileUtil
 import okhttp3.*
 import java.io.File
@@ -29,30 +30,15 @@ class HttpManager(private val okHttpClient: OkHttpClient) {
 
     fun doGet(url: String, realCallback: DataCallBack<String>) {
         val request = Request.Builder().url(url).build()
-
-        execute(request, object : RawCallback {
-            override fun onSuccess(result: Response) {
-                if (result.body()?.string().isNullOrEmpty()) {
-                    handler.post {
-                        realCallback.onFail(BusinessException("body empty!", BusinessException.CODE_BODY_EMPTY))
-                    }
-                } else {
-                    handler.post { realCallback.onSuccess(result.body()?.string() ?: "") }
-
-                }
-            }
-
-            override fun onError(exception: BusinessException) {
-                handler.post { realCallback.onFail(exception) }
-
-            }
-
-        })
+        execute(request, StringCallBack(realCallback))
     }
 
+    /**
+     * 单文件get方式下载
+     */
     fun doGet(url: String, path: String, realCallback: DataCallBack<File>) {
         val request = Request.Builder().url(url).build()
-        execute(request, object : RawCallback {
+        execute(request, object : RawCallback() {
             override fun onSuccess(result: Response) {
                 if (result.body()?.byteStream() == null) {
                     handler.post { realCallback.onFail(BusinessException("body empty!", BusinessException.CODE_BODY_EMPTY)) }
@@ -74,41 +60,39 @@ class HttpManager(private val okHttpClient: OkHttpClient) {
 
     }
 
-    fun doPost(url: String, realCallback: DataCallBack<File>, path: String) {
+    /**
+     * post单文件上传
+     */
+    fun doPost(url: String, file: File, realCallback: DataCallBack<String>) {
+        val fileBody = RequestBody.create(MediaType.parse("application/octet-stream"), file)
+//        val requestBody = MultipartBody.Builder()
+//                .setType(MultipartBody.FORM)
+//                .addPart()
+        val request = Request.Builder()
+                .url(url)
+                .post(fileBody)
+                .build()
 
 
     }
 
-    fun doPost(url:String,params:Map<String,String>,realCallback: DataCallBack<String>){
+    /**
+     * post普通参数请求服务器
+     */
+    fun doPost(url: String, params: Map<String, String>, realCallback: DataCallBack<String>) {
         val builder = FormBody.Builder()
-        for ((key,value) in params){
-            builder.add(key,value)
+        for ((key, value) in params) {
+            builder.add(key, value)
         }
         val body = builder.build()
-        val request = Request.Builder().url(url).post(body).build()
+        val request = Request.Builder()
+                .url(url)
+                .post(body)
+                .build()
 
-        execute(request,object :RawCallback{
-            override fun onSuccess(result: Response) {
-                val message = result.body()?.string()
-                if (message.isNullOrEmpty()) {
-                    handler.post {
-                        realCallback.onFail(BusinessException("body empty!", BusinessException.CODE_BODY_EMPTY))
-                    }
-                } else {
-                    handler.post { realCallback.onSuccess(message?:" ") }
-
-                }
-            }
-
-            override fun onError(exception: BusinessException) {
-                handler.post { realCallback.onFail(exception) }
-
-            }
-
-        })
+        execute(request, StringCallBack(realCallback))
 
     }
-
 
 
     private fun execute(request: Request, callback: RawCallback) {

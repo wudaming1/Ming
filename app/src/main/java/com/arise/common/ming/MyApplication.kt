@@ -1,6 +1,8 @@
 package com.arise.common.ming
 
 import android.os.Build
+import android.os.Handler
+import android.os.Looper
 import com.arise.common.ming.base.PreferenceManager
 import com.arise.common.sdk.BaseApplication
 import com.arise.common.sdk.http.HttpManager
@@ -14,7 +16,6 @@ class MyApplication:BaseApplication(){
     companion object {
         var instance:MyApplication by Delegates.notNull()
         var httpManager : HttpManager by Delegates.notNull()
-
     }
 
     override fun onCreate() {
