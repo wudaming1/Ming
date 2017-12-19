@@ -34,8 +34,8 @@ class TitleView : FrameLayout {
 
 
     private fun init() {
-        View.inflate(context, R.layout.title_layout, this)
-        ImmersiveUtil.makeSpaceForImmersive(findViewById(R.id.parent))
+        val root = View.inflate(context, R.layout.title_layout, this)
+        ImmersiveUtil.makeSpaceForImmersive(root)
         findViewById<View>(R.id.go_back).setOnClickListener {
             //todo 添加Fragment支持
             if (context is MyBaseActivity) {

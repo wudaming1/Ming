@@ -5,6 +5,7 @@
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:gravity="center_horizontal"
+    android:id="@+id/login"
     tools:context="com.arise.common.ming.user.unlogin.UnLoginFragment">
 
     <com.facebook.drawee.view.SimpleDraweeView

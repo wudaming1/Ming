@@ -1,8 +1,10 @@
 package com.arise.common.ming.config
 
 import com.arise.common.ming.BuildConfig
+import com.arise.common.ming.base.MessageEvent
 import com.arise.common.ming.base.PreferenceManager
 import com.arise.common.ming.user.UserInfoBean
+import org.greenrobot.eventbus.EventBus
 
 /**
  * 全局配置信息
@@ -24,13 +26,14 @@ object HttpConfig {
 }
 
 object UserConfig {
-    var islogin = false
+    var isLogin = PreferenceManager.isLogin()
     var user: UserInfoBean? = null
 
 
     fun loginOut(){
-        islogin = false
+        isLogin = false
         user = null
+        EventBus.getDefault().post(MessageEvent.UNLOGIN)
         PreferenceManager.saveToken("")
     }
 

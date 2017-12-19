@@ -1,5 +1,6 @@
 package com.arise.common.ming.http
 
+import com.arise.common.ming.base.PreferenceManager
 import com.arise.common.ming.config.UserConfig
 import com.arise.common.ming.http.callback.ActionCallback
 import com.arise.common.ming.user.login.LoginActivity
@@ -7,6 +8,7 @@ import com.arise.common.sdk.http.HttpManager
 import com.arise.common.sdk.http.callback.BusinessException
 import com.arise.common.sdk.http.callback.DataCallBack
 import com.arise.common.sdk.utils.JsonUtil
+import com.arise.common.sdk.utils.ToastUtil
 
 /**
  * 负责解析自定义的一些状态，每个请求对应一个对象。
@@ -58,6 +60,8 @@ class MyHttpRequest<T : Any>(private val url: String, private val method: Method
             HttpResultCode.DATABASE_ERR -> actionCallback?.onError(BusinessException(resultBean.message, resultBean.resultCode))
             HttpResultCode.PARAM_ERR -> actionCallback?.onError(BusinessException(resultBean.message, resultBean.resultCode))
             HttpResultCode.TOKEN_INVALID ->{
+                ToastUtil.showToast("登录过期，请重新登录！")
+                PreferenceManager.saveLoginState(false)
                 UserConfig.loginOut()
                 LoginActivity.goLogin()
             }

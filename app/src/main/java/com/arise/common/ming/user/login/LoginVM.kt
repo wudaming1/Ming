@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.Toast
 import com.arise.common.ming.MyApplication
 import com.arise.common.ming.R
+import com.arise.common.ming.base.MessageEvent
 import com.arise.common.ming.base.PreferenceManager
 import com.arise.common.ming.config.HttpConfig
 import com.arise.common.ming.config.UserConfig
@@ -12,6 +13,7 @@ import com.arise.common.ming.http.Method
 import com.arise.common.ming.http.MyHttpRequest
 import com.arise.common.ming.http.callback.ActionCallback
 import com.arise.common.ming.user.UserInfoBean
+import org.greenrobot.eventbus.EventBus
 
 
 /**
@@ -67,19 +69,17 @@ class LoginVM(val loginActivity: LoginActivity) : View.OnClickListener {
 
     private fun authSuccess(token: String) {
         PreferenceManager.saveToken(token)
-        UserConfig.islogin = true
-        Toast.makeText(MyApplication.instance, token, Toast.LENGTH_SHORT).show()
         MyHttpRequest<UserInfoBean>(userInfoUrl, object : ActionCallback {
-
             override fun onSuccess(result: Any?) {
-                if (result is UserInfoBean) {
-                    UserConfig.user = result
+                result?.let {
+                    UserConfig.user = result as UserInfoBean
+                    UserConfig.isLogin = true
+                    PreferenceManager.saveLoginState(true)
+                    EventBus.getDefault().post(MessageEvent.LOGIN)
                     loginActivity.finish()
-                }else{
-                    Toast.makeText(MyApplication.instance, result?.toString()?:"", Toast.LENGTH_SHORT).show()
                 }
             }
-        }, Method.GET).execute()
+        }, Method.GET).setclazz(UserInfoBean::class.java).execute()
 
     }
 }

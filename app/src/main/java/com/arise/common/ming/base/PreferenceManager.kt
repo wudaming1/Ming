@@ -29,6 +29,12 @@ object PreferenceManager {
     fun getToken():String {
         return preferenceHelp.getString("token") }
 
+    fun saveLoginState(isLogin:Boolean){
+        preferenceHelp.putBoolean("login_state",isLogin)
+    }
+
+    fun isLogin() = preferenceHelp.getBoolean("login_state")
+
 
     fun saveUserName(name: String) {
         preferenceHelp.putString("user_name", name)

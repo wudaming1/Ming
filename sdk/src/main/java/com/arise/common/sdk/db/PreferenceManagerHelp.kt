@@ -20,4 +20,14 @@ class PreferenceManagerHelp(private val sharedPreferences: SharedPreferences) {
     fun getString(key: String, default: String = ""): String {
         return sharedPreferences.getString(key, default)
     }
+
+    fun putBoolean(key:String,value:Boolean){
+        val editor = sharedPreferences.edit()
+        editor.putBoolean(key, value)
+        editor.apply()
+    }
+
+    fun getBoolean(key: String,default: Boolean = false):Boolean{
+        return sharedPreferences.getBoolean(key, default)
+    }
 }

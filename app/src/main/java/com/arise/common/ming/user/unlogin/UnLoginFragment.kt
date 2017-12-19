@@ -30,7 +30,7 @@ class UnLoginFragment : MyBaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        go_login.setOnClickListener {
+        login.setOnClickListener {
             LoginActivity.goLogin()
         }
     }

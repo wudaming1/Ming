@@ -12,7 +12,7 @@ import com.arise.common.ming.home.userCenter.UserFragment
 import com.arise.common.ming.user.login.LoginActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : MyBaseActivity(),UserFragment.OnFragmentInteractionListener,DrawerLayout.DrawerListener {
+class MainActivity : MyBaseActivity(),UserFragment.OnFragmentInteractionListener {
 
     private lateinit var leftMenu: UserFragment
 
@@ -37,22 +37,6 @@ class MainActivity : MyBaseActivity(),UserFragment.OnFragmentInteractionListener
         ft.add(R.id.left_menu, leftMenu)
         ft.commit()
 
-    }
-
-
-    override fun onDrawerStateChanged(newState: Int) {
-        if (newState == DrawerLayout.STATE_DRAGGING){
-            leftMenu.refreshLoginState()
-        }
-    }
-
-    override fun onDrawerSlide(drawerView: View?, slideOffset: Float) {
-    }
-
-    override fun onDrawerClosed(drawerView: View?) {
-    }
-
-    override fun onDrawerOpened(drawerView: View?) {
     }
 
     override fun onFragmentInteraction(uri: Uri) {

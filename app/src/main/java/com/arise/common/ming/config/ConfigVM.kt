@@ -2,9 +2,10 @@ package com.arise.common.ming.config
 
 import android.databinding.ObservableField
 import android.view.View
+import com.arise.common.ming.base.PreferenceManager
 
 /**
- * Created by wudaming on 2017/11/29.
+ * 配置服务器地址
  */
 class ConfigVM(private val activity: ConfigActivity):View.OnClickListener{
 
@@ -18,6 +19,7 @@ class ConfigVM(private val activity: ConfigActivity):View.OnClickListener{
 
     override fun onClick(v: View) {
         HttpConfig.base_url = url.get()
+        PreferenceManager.saveDebugHttpUrl(HttpConfig.base_url)
         activity.finish()
     }
 

@@ -11,13 +11,15 @@ import android.view.View
 import android.view.ViewGroup
 import com.arise.common.ming.ImmersiveUtil
 import com.arise.common.ming.R
+import com.arise.common.ming.base.MessageEvent
 import com.arise.common.ming.base.MyBaseFragment
 import com.arise.common.ming.config.UserConfig
 import com.arise.common.ming.user.info.UserInfoActivity
 import com.arise.common.ming.user.unlogin.UnLoginFragment
 import com.arise.common.sdk.utils.FrescoUtil
-import com.orhanobut.logger.Logger
 import kotlinx.android.synthetic.main.fragment_user.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
 
 /**
  * 这个Fragment被载入DrawerLayout的start侧边栏，在侧边栏被拉出拉入的时候并没有触发任何生命周期回调。
@@ -46,7 +48,7 @@ class UserFragment : MyBaseFragment() {
 
     private val TAG = UserFragment::class.java.simpleName
 
-    private lateinit var rootView:View
+    private lateinit var rootView: View
 
     // TODO: Rename and change types of parameters
     private var mParam1: String? = null
@@ -54,7 +56,18 @@ class UserFragment : MyBaseFragment() {
 
     private var mListener: OnFragmentInteractionListener? = null
 
-    private lateinit var unloginFragment:UnLoginFragment
+    private lateinit var unloginFragment: UnLoginFragment
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        Log.e(TAG, "onAttach")
+        if (context is OnFragmentInteractionListener) {
+            mListener = context
+        } else {
+            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
+        }
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,11 +75,12 @@ class UserFragment : MyBaseFragment() {
             mParam1 = arguments.getString(ARG_PARAM1)
             mParam2 = arguments.getString(ARG_PARAM2)
         }
+        EventBus.getDefault().register(this)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        Log.e(TAG,"onCreateView")
+        Log.e(TAG, "onCreateView")
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_user, container, false)
         return rootView
@@ -77,33 +91,38 @@ class UserFragment : MyBaseFragment() {
      */
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        //todo 添加padding来空出状态栏
         ImmersiveUtil.makeSpaceForImmersive(rootView)
         unloginFragment = UnLoginFragment()
         val ft = childFragmentManager.beginTransaction()
-        ft.add(R.id.unlogin,unloginFragment)
+        ft.add(R.id.unlogin, unloginFragment)
         ft.commit()
-        refreshLoginState()
+        refreshLoginState(if (UserConfig.isLogin) MessageEvent.LOGIN else MessageEvent.UNLOGIN)
 
     }
 
-    fun refreshLoginState(){
-        if (UserConfig.islogin){
-            group_header.visibility = View.VISIBLE
-            group_header.setOnClickListener{
-                val intent = Intent(activity,UserInfoActivity::class.java)
-                activity.startActivity(intent)
-            }
-            UserConfig.user?.apply {
-                user_name.text = userName
-                imgUrl?.apply { FrescoUtil.loadNetPic(header_image,imgUrl) }
-            }
-            hideFragment(unloginFragment)
-        }else{
-            group_header.visibility = View.GONE
-            showFragment(unloginFragment)
 
+    @Subscribe
+    fun refreshLoginState(event: MessageEvent) {
+        when (event) {
+            MessageEvent.LOGIN -> {
+                group_header.visibility = View.VISIBLE
+                group_header.setOnClickListener {
+                    val intent = Intent(activity, UserInfoActivity::class.java)
+                    activity.startActivity(intent)
+                }
+                UserConfig.user?.apply {
+                    user_name.text = userName
+                    imgUrl?.apply { FrescoUtil.loadNetPic(header_image, imgUrl) }
+                }
+                hideFragment(unloginFragment)
+
+            }
+            MessageEvent.UNLOGIN -> {
+                group_header.visibility = View.GONE
+                showFragment(unloginFragment)
+            }
         }
+
     }
 
 
@@ -114,14 +133,9 @@ class UserFragment : MyBaseFragment() {
         }
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        Log.e(TAG,"onAttach")
-        if (context is OnFragmentInteractionListener) {
-            mListener = context
-        } else {
-            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
-        }
+    override fun onDestroy() {
+        EventBus.getDefault().unregister(this)
+        super.onDestroy()
     }
 
     override fun getName(): String {
@@ -130,7 +144,7 @@ class UserFragment : MyBaseFragment() {
 
     override fun onDetach() {
         super.onDetach()
-        Log.e(TAG,"onDetach")
+        Log.e(TAG, "onDetach")
         mListener = null
     }
 
