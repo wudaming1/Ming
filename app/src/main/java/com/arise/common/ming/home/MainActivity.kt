@@ -10,6 +10,7 @@ import com.arise.common.ming.base.MyBaseActivity
 import com.arise.common.ming.config.ConfigActivity
 import com.arise.common.ming.home.userCenter.UserFragment
 import com.arise.common.ming.user.login.LoginActivity
+import com.arise.common.sdk.utils.ToastUtil
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : MyBaseActivity(),UserFragment.OnFragmentInteractionListener {
@@ -26,6 +27,10 @@ class MainActivity : MyBaseActivity(),UserFragment.OnFragmentInteractionListener
             this@MainActivity.startActivity(intent)
 
         }
+
+        toast_same.setOnClickListener { ToastUtil.showToast("我是同一个") }
+
+        toast_diff.setOnClickListener { ToastUtil.showToast("我是不同的${System.currentTimeMillis()}") }
 
         init()
 

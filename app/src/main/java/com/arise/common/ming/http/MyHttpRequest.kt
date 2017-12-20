@@ -61,7 +61,6 @@ class MyHttpRequest<T : Any>(private val url: String, private val method: Method
             HttpResultCode.PARAM_ERR -> actionCallback?.onError(BusinessException(resultBean.message, resultBean.resultCode))
             HttpResultCode.TOKEN_INVALID ->{
                 ToastUtil.showToast("登录过期，请重新登录！")
-                PreferenceManager.saveLoginState(false)
                 UserConfig.loginOut()
                 LoginActivity.goLogin()
             }

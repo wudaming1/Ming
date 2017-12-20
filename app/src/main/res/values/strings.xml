@@ -9,6 +9,7 @@
     <!--通用-->
     <string name="cancel">取消</string>
     <string name="confirm">确定</string>
+    <string name="edit_hint">请输入</string>
 
     <!--用户相关-->
     <string name="mine_info">我的资料</string>
@@ -20,6 +21,10 @@
     <string name="unlogin_tip">登录享受更多功能!</string>
     <string name="portrait">头像</string>
     <string name="nickname">昵称</string>
+    <string name="login_out">退出登录</string>
+
+    <!--toast-->
+    <string name="input_empty">输入不能为空</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

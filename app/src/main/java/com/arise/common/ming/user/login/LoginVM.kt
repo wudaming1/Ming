@@ -68,14 +68,10 @@ class LoginVM(val loginActivity: LoginActivity) : View.OnClickListener {
     }
 
     private fun authSuccess(token: String) {
-        PreferenceManager.saveToken(token)
         MyHttpRequest<UserInfoBean>(userInfoUrl, object : ActionCallback {
             override fun onSuccess(result: Any?) {
                 result?.let {
-                    UserConfig.user = result as UserInfoBean
-                    UserConfig.isLogin = true
-                    PreferenceManager.saveLoginState(true)
-                    EventBus.getDefault().post(MessageEvent.LOGIN)
+                    UserConfig.login(result as UserInfoBean,token)
                     loginActivity.finish()
                 }
             }

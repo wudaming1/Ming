@@ -1,6 +1,7 @@
 package com.arise.common.ming.user.info
 
 import android.databinding.ObservableField
+import com.arise.common.ming.config.UserConfig
 import java.io.File
 
 /**
@@ -9,6 +10,10 @@ import java.io.File
 class UserInfoVM(activity: UserInfoActivity){
 
     var nickname = ObservableField<String>()
+
+    init {
+        UserConfig.user?.let { nickname.set(it.userName) }
+    }
 
     fun modifyNickname(string: String){
 

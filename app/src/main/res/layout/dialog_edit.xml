@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/bg_white"
+    android:orientation="vertical"
+    tools:ignore="SpUsage">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:textColor="@color/font_black"
+        android:textSize="@dimen/h2"
+        tools:text="这是标题"
+        android:id="@+id/title"
+        android:gravity="center"/>
+    <View
+        style="@style/divider"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:textSize="@dimen/h3"
+        android:textColor="@color/font_black"
+        android:id="@+id/content"
+        android:hint="@string/edit_hint"
+        android:gravity="center"/>
+    <View
+        style="@style/divider"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:weightSum="2">
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/cancel_btn"
+            android:text="@string/cancel"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/confirm_btn"
+            android:text="@string/confirm"/>
+    </LinearLayout>
+
+</LinearLayout>

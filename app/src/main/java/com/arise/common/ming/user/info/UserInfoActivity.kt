@@ -4,12 +4,15 @@ import android.databinding.DataBindingUtil
 import android.os.Bundle
 import com.arise.common.ming.R
 import com.arise.common.ming.base.MyBaseActivity
+import com.arise.common.ming.config.UserConfig
 import com.arise.common.ming.databinding.ActivityUserInfoBinding
 import com.arise.common.ming.dialog.CommonDialog
+import com.arise.common.ming.dialog.EditDialog
 import com.arise.common.sdk.utils.ToastUtil
 import kotlinx.android.synthetic.main.activity_user_info.*
 
 class UserInfoActivity : MyBaseActivity() {
+
     private lateinit var viewModule:UserInfoVM
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,17 +27,25 @@ class UserInfoActivity : MyBaseActivity() {
         title_bar.setTitle(getString(R.string.mine_info))
         group_nickname.setOnClickListener { showModifyNicknameDialog() }
         group_portrait.setOnClickListener { showModifyPortraitDialog() }
-
+        login_out.setOnClickListener { showLoginOutDialog() }
     }
 
     private fun showModifyNicknameDialog(){
-        val dialog = CommonDialog.newInstance("修改昵称","testtesttesttest")
+        val dialog = EditDialog.newInstance("修改昵称","请输入昵称")
         dialog.cancel = {ToastUtil.showToast("取消修改昵称")}
         dialog.confirm = {ToastUtil.showToast("确认修改昵称")}
         dialog.show(fragmentManager,"nickname")
     }
 
     private fun showModifyPortraitDialog(){
+        val dialog = EditDialog.newInstance("")
+    }
 
+    private fun showLoginOutDialog(){
+        val dialog = CommonDialog.newInstance(getString(R.string.login_out))
+        dialog.confirm = {
+            UserConfig.loginOut()
+        }
+        dialog.show(fragmentManager,"nickname")
     }
 }

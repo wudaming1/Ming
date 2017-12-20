@@ -12,7 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context="com.arise.common.ming.home.MainActivity">
+        tools:context="com.arise.common.ming.home.MainActivity"
+        android:paddingTop="50dp">
 
         <Button
             android:id="@+id/go_config"
@@ -21,6 +22,24 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
             android:text="@string/go_config" />
+
+        <Button
+            android:id="@+id/toast_same"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:text="相同的Toast内容" />
+
+
+        <Button
+            android:id="@+id/toast_diff"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:text="不同的toast内容" />
+
 
     </LinearLayout>
 

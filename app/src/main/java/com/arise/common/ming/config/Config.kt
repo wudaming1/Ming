@@ -33,8 +33,18 @@ object UserConfig {
     fun loginOut(){
         isLogin = false
         user = null
-        EventBus.getDefault().post(MessageEvent.UNLOGIN)
+        PreferenceManager.saveLoginState(false)
         PreferenceManager.saveToken("")
+        EventBus.getDefault().post(MessageEvent.UNLOGIN)
+
+    }
+
+    fun login(userInfoBean: UserInfoBean,token:String){
+        isLogin = true
+        user = userInfoBean
+        PreferenceManager.saveLoginState(true)
+        PreferenceManager.saveToken(token)
+        EventBus.getDefault().post(MessageEvent.LOGIN)
     }
 
 }
