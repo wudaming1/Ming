@@ -1,8 +1,11 @@
 package com.arise.common.sdk
 
 import android.app.Application
+import android.content.Context
 import android.os.Handler
 import android.os.Looper
+import android.support.multidex.MultiDex
+import android.support.multidex.MultiDexApplication
 import com.arise.common.sdk.http.HeaderInterceptor
 import com.arise.common.sdk.http.WriteCacheControllInterceptor
 import com.arise.common.sdk.utils.FileUtil.NET_CACHE_PATH
@@ -21,7 +24,7 @@ import com.orhanobut.logger.FormatStrategy
 /**
  * Created by wudaming on 2017/11/16.
  */
-open class BaseApplication : Application() {
+open class BaseApplication : MultiDexApplication() {
 
     companion object {
         var baseInstance: BaseApplication by Delegates.notNull()
@@ -36,8 +39,11 @@ open class BaseApplication : Application() {
         baseInstance = this
         initHttpClient()
         initLogger()
+    }
 
-        Fresco.initialize(this)
+    override fun attachBaseContext(base: Context?) {
+        super.attachBaseContext(base)
+        MultiDex.install(this)
     }
 
     /**

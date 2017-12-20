@@ -3,15 +3,15 @@ package com.arise.common.ming.home
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.support.v4.widget.DrawerLayout
-import android.view.View
 import com.arise.common.ming.R
 import com.arise.common.ming.base.MyBaseActivity
 import com.arise.common.ming.config.ConfigActivity
 import com.arise.common.ming.home.userCenter.UserFragment
-import com.arise.common.ming.user.login.LoginActivity
 import com.arise.common.sdk.utils.ToastUtil
+import com.meili.component.imagepicker.MLImagePicker
+import com.meili.component.imagepicker.ui.MLImageListActivity
 import kotlinx.android.synthetic.main.activity_main.*
+
 
 class MainActivity : MyBaseActivity(),UserFragment.OnFragmentInteractionListener {
 
@@ -28,7 +28,10 @@ class MainActivity : MyBaseActivity(),UserFragment.OnFragmentInteractionListener
 
         }
 
-        toast_same.setOnClickListener { ToastUtil.showToast("我是同一个") }
+        toast_same.setOnClickListener {
+            val intent = Intent(this, MLImageListActivity::class.java)
+            startActivityForResult(intent, MLImagePicker.CODE_REQUEST_IMG_LIST)
+        }
 
         toast_diff.setOnClickListener { ToastUtil.showToast("我是不同的${System.currentTimeMillis()}") }
 

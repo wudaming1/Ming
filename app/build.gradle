@@ -10,11 +10,12 @@ android {
     compileSdkVersion 26
     defaultConfig {
         applicationId "com.arise.common.ming"
-        minSdkVersion 18
+        minSdkVersion 19
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
 
 
         dataBinding {
@@ -40,6 +41,7 @@ dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'org.greenrobot:eventbus:3.1.1'
     implementation project(':sdk')
+    implementation project(':imagepicker')
 
     implementation 'com.android.support:support-v4:26.1.0'
     kapt 'com.android.databinding:compiler:3.0.1'

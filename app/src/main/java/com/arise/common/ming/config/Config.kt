@@ -9,7 +9,10 @@ import org.greenrobot.eventbus.EventBus
 /**
  * 全局配置信息
  */
-class Config {
+object Config {
+
+    val BASE_PATH = ""
+    val CACHE_PATH = BASE_PATH + "/cache"
 
 }
 
