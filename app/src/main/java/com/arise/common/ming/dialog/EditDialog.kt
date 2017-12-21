@@ -33,7 +33,13 @@ class EditDialog : DialogFragment() {
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        val view = inflater.inflate(R.layout.dialog_edit, container, false)
+        return inflater.inflate(R.layout.dialog_edit, container, false)
+    }
+
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
         if (arguments.getString(TITLE, "").isBlank()) {
             title.visibility = View.GONE
         } else {
@@ -42,12 +48,7 @@ class EditDialog : DialogFragment() {
         }
         if (!arguments.getString(HINT, "").isBlank())
             content.hint = arguments.getString(HINT, "")
-        return view
-    }
 
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
         cancel_btn.setOnClickListener {
             cancel?.invoke()
             dismiss()
