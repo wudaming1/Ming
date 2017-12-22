@@ -29,7 +29,7 @@ open class BaseApplication : MultiDexApplication() {
     companion object {
         var baseInstance: BaseApplication by Delegates.notNull()
         val headers = hashMapOf<String, String>()
-        val mainHander = Handler(Looper.getMainLooper())
+        val mainHandler = Handler(Looper.getMainLooper())
     }
 
     lateinit var httpClient: OkHttpClient

@@ -1,7 +1,5 @@
 package com.arise.common.sdk.http.callback
 
-import android.os.Handler
-import android.os.Looper
 import com.arise.common.sdk.BaseApplication
 import okhttp3.Response
 
@@ -13,7 +11,7 @@ internal abstract class RawCallback {
     abstract fun onError(exception: BusinessException)
 
     fun postOnUIThread(r:()->Unit) {
-        BaseApplication.mainHander.post(r)
+        BaseApplication.mainHandler.post(r)
     }
 }
 
