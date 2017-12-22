@@ -4,6 +4,8 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+//apply plugin: 'realm-android'
+
 //apply plugin: 'com.jakewharton.butterknife'
 
 android {
@@ -34,12 +36,19 @@ android {
     }
 }
 
+//realm {
+//    syncEnabled = true
+//}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'org.greenrobot:eventbus:3.1.1'
+
+    implementation 'com.github.vicpinm:krealmextensions:1.0.4'
+
     implementation project(':sdk')
     implementation project(':imagepicker')
 

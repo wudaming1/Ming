@@ -34,19 +34,29 @@
         android:layout_height="40dp"
         android:orientation="horizontal"
         android:weightSum="2">
-        <Button
+        <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:id="@+id/cancel_btn"
+            android:gravity="center"
+            android:background="@color/bg_yellow"
+            android:textColor="@color/font_black"
+            android:textSize="@dimen/h3"
             android:text="@string/cancel"/>
 
-        <Button
+        <View style="@style/divider_vertical" />
+
+        <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@color/bg_yellow"
             android:id="@+id/confirm_btn"
-            android:text="@string/confirm"/>
+            android:gravity="center"
+            android:text="@string/confirm"
+            android:textColor="@color/font_black"
+            android:textSize="@dimen/h3"/>
     </LinearLayout>
 
 </LinearLayout>

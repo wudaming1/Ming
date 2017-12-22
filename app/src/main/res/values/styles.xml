@@ -22,6 +22,12 @@
         <item name="android:background">@color/bg_gray</item>
     </style>
 
+    <style name="divider_vertical">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">@dimen/divider_height</item>
+        <item name="android:background">@color/bg_gray</item>
+    </style>
+
 
 
     <!--Mine-->

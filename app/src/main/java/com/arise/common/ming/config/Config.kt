@@ -30,23 +30,25 @@ object HttpConfig {
 
 object UserConfig {
     var isLogin = PreferenceManager.isLogin()
-    var user: UserInfoBean? = null
+    var user: UserInfoBean? = PreferenceManager.getUserInfo()
 
 
-    fun loginOut(){
+    fun loginOut() {
         isLogin = false
         user = null
         PreferenceManager.saveLoginState(false)
         PreferenceManager.saveToken("")
+        PreferenceManager.deleteUserInfo()
         EventBus.getDefault().post(MessageEvent.UNLOGIN)
 
     }
 
-    fun login(userInfoBean: UserInfoBean,token:String){
+    fun login(userInfoBean: UserInfoBean, token: String) {
         isLogin = true
         user = userInfoBean
         PreferenceManager.saveLoginState(true)
         PreferenceManager.saveToken(token)
+        PreferenceManager.saveUserInfo(userInfoBean)
         EventBus.getDefault().post(MessageEvent.LOGIN)
     }
 

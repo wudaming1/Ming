@@ -10,6 +10,7 @@
     <!--background-->
     <color name="bg_white">#ffffffff</color>
     <color name="bg_gray">#88808080</color>
+    <color name="bg_yellow">#ffe600</color>
 
     <!--font按照色值大小排序-->
     <color name="font_black">#000000</color>

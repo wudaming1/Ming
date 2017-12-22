@@ -10,7 +10,7 @@ object JsonUtil {
 
     private val mapper = jacksonObjectMapper()
 
-    fun <T : Any> readValue(jsonString: String, clazz: Class<T>): T? {
+    fun <T> readValue(jsonString: String, clazz: Class<T>): T? {
         var result: T? = null
         try {
 
