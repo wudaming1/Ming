@@ -43,6 +43,11 @@ class MyApplication : BaseApplication() {
         headers.put("brand", Build.BRAND)
     }
 
+    fun updateToken(token:String){
+        PreferenceManager.saveToken(token)
+        headers.put("token", PreferenceManager.getToken())
+    }
+
 
 
     private fun initImagePicker() {

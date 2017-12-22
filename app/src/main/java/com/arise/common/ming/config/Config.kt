@@ -1,6 +1,7 @@
 package com.arise.common.ming.config
 
 import com.arise.common.ming.BuildConfig
+import com.arise.common.ming.MyApplication
 import com.arise.common.ming.base.MessageEvent
 import com.arise.common.ming.base.PreferenceManager
 import com.arise.common.ming.user.UserInfoBean
@@ -37,17 +38,16 @@ object UserConfig {
         isLogin = false
         user = null
         PreferenceManager.saveLoginState(false)
-        PreferenceManager.saveToken("")
         PreferenceManager.deleteUserInfo()
+        MyApplication.instance.updateToken("")
         EventBus.getDefault().post(MessageEvent.UNLOGIN)
 
     }
 
-    fun login(userInfoBean: UserInfoBean, token: String) {
+    fun login(userInfoBean: UserInfoBean) {
         isLogin = true
         user = userInfoBean
         PreferenceManager.saveLoginState(true)
-        PreferenceManager.saveToken(token)
         PreferenceManager.saveUserInfo(userInfoBean)
         EventBus.getDefault().post(MessageEvent.LOGIN)
     }

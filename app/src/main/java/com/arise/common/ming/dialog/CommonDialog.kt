@@ -36,8 +36,15 @@ class CommonDialog : DialogFragment() {
     /**
      * @param container 只有restore的情况可能为空，否则一定不为空，代表Fragment界面的容器
      */
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = inflater.inflate(R.layout.dialog_simple, container, false)
+
+        return view
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
         if (arguments.getString(TITLE, "").isBlank()) {
             title.visibility = View.GONE
         } else {
@@ -45,15 +52,11 @@ class CommonDialog : DialogFragment() {
             title.text = arguments.getString(TITLE, "")
         }
         content.text = arguments.getString(DESC, "")
-        return view
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
         cancel_btn.setOnClickListener {
             cancel?.invoke()
             dismiss()
         }
+
         confirm_btn.setOnClickListener {
             confirm?.invoke()
             dismiss()

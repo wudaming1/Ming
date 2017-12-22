@@ -1,17 +1,16 @@
 package com.arise.common.ming.http.callback
 
-import android.widget.Toast
-import com.arise.common.ming.MyApplication
 import com.arise.common.sdk.http.callback.BusinessException
+import com.arise.common.sdk.utils.ToastUtil
 
 /**
  * 最终网络请求回调
  */
-interface ActionCallback {
+interface ActionCallback<in T> {
 
     fun onError(exception: BusinessException) {
-        Toast.makeText(MyApplication.instance, exception.message, Toast.LENGTH_LONG).show()
+        ToastUtil.showToast(exception.message)
     }
 
-    fun onSuccess(result: Any?)
+    fun onSuccess(result: T?)
 }

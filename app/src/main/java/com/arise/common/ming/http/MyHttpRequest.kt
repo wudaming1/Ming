@@ -18,7 +18,7 @@ class MyHttpRequest<T : Any>(private val url: String, private val method: Method
 
 
     private lateinit var path: String
-    private var actionCallback: ActionCallback? = null
+    private var actionCallback: ActionCallback<T>? = null
     private val map = hashMapOf<String, String>()
     private var clazz: Class<T>? = null
 
@@ -27,11 +27,11 @@ class MyHttpRequest<T : Any>(private val url: String, private val method: Method
         this.path = path
     }
 
-    constructor(url: String, callback: ActionCallback, method: Method = Method.GET) : this(url, method) {
+    constructor(url: String, callback: ActionCallback<T>, method: Method = Method.GET) : this(url, method) {
         actionCallback = callback
     }
 
-    constructor(url: String,map: HashMap<String,String>, callback: ActionCallback, method: Method = Method.GET) : this(url, method) {
+    constructor(url: String, map: HashMap<String, String>, callback: ActionCallback<T>, method: Method = Method.GET) : this(url, method) {
         actionCallback = callback
         this.map.putAll(map)
     }
@@ -59,15 +59,17 @@ class MyHttpRequest<T : Any>(private val url: String, private val method: Method
             HttpResultCode.FAIL -> actionCallback?.onError(BusinessException(resultBean.message, resultBean.resultCode))
             HttpResultCode.DATABASE_ERR -> actionCallback?.onError(BusinessException(resultBean.message, resultBean.resultCode))
             HttpResultCode.PARAM_ERR -> actionCallback?.onError(BusinessException(resultBean.message, resultBean.resultCode))
-            HttpResultCode.TOKEN_INVALID ->{
+            HttpResultCode.TOKEN_INVALID -> {
                 ToastUtil.showToast("登录过期，请重新登录！")
                 UserConfig.loginOut()
                 LoginActivity.goLogin()
             }
             HttpResultCode.SUCCESS -> {
                 if (clazz == null) {
-                    actionCallback?.onSuccess(resultBean.data)
-                } else {
+                    throw Exception("未指定解析类型！")
+                } else if(clazz == String::class.java){
+                    actionCallback?.onSuccess(resultBean.data as T)
+                }else{
                     val parserResult = JsonUtil.readValue<T>(resultBean.data, clazz!!)
                     actionCallback?.onSuccess(parserResult)
                 }
@@ -100,5 +102,5 @@ class MyHttpRequest<T : Any>(private val url: String, private val method: Method
 
 
 enum class Method {
-    GET, POST
+    GET, POST, PUT
 }

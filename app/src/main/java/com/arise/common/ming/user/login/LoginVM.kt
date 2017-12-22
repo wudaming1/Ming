@@ -13,6 +13,7 @@ import com.arise.common.ming.http.Method
 import com.arise.common.ming.http.MyHttpRequest
 import com.arise.common.ming.http.callback.ActionCallback
 import com.arise.common.ming.user.UserInfoBean
+import com.arise.common.ming.user.UserService
 import org.greenrobot.eventbus.EventBus
 
 
@@ -21,9 +22,6 @@ import org.greenrobot.eventbus.EventBus
  */
 class LoginVM(val loginActivity: LoginActivity) : View.OnClickListener {
 
-    private val loginUrl = HttpConfig.base_url + "/login"
-    private val registerUrl = HttpConfig.base_url + "/register"
-    private val userInfoUrl = HttpConfig.base_url + "/auth/userInfo"
 
     var name = ObservableField<String>()
     var password = ObservableField<String>()
@@ -40,42 +38,40 @@ class LoginVM(val loginActivity: LoginActivity) : View.OnClickListener {
             return
         }
 
-        val map = HashMap<String, String>()
-        map.put("name", name.get())
-        map.put("password", password.get())
         when (v.id) {
             R.id.login -> {
-                MyHttpRequest<String>(loginUrl, map, object : ActionCallback {
-                    override fun onSuccess(result: Any?) {
+                UserService.login(name.get(), password.get(), object : ActionCallback<String> {
+                    override fun onSuccess(result: String?) {
                         result?.apply {
-                            authSuccess(result.toString())
+                            MyApplication.instance.updateToken(result.toString())
+                            authSuccess()
                         }
                     }
 
-                }, Method.POST).execute()
+                })
             }
             R.id.register -> {
-                MyHttpRequest<String>(registerUrl, map, object : ActionCallback {
-                    override fun onSuccess(result: Any?) {
+                UserService.register(name.get(), password.get(), object : ActionCallback<String> {
+                    override fun onSuccess(result: String?) {
                         result?.apply {
-                            authSuccess(result.toString())
+                            MyApplication.instance.updateToken(result.toString())
+                            authSuccess()
                         }
                     }
-
-                }, Method.POST).execute()
+                })
             }
         }
     }
 
-    private fun authSuccess(token: String) {
-        MyHttpRequest<UserInfoBean>(userInfoUrl, object : ActionCallback {
-            override fun onSuccess(result: Any?) {
+    private fun authSuccess() {
+        UserService.getUserInfo(object : ActionCallback<UserInfoBean> {
+            override fun onSuccess(result: UserInfoBean?) {
                 result?.let {
-                    UserConfig.login(result as UserInfoBean,token)
+                    UserConfig.login(result)
                     loginActivity.finish()
                 }
             }
-        }, Method.GET).setclazz(UserInfoBean::class.java).execute()
-
+        }
+        )
     }
 }

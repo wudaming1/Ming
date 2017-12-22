@@ -10,14 +10,14 @@ abstract class BaseFragment : Fragment() {
     fun showFragment(fragment: BaseFragment) {
         val ft = childFragmentManager.beginTransaction()
         ft.show(fragment)
-        ft.commit()
+        ft.commitAllowingStateLoss()
         fragment.onVisibleChange(true)
     }
 
     fun hideFragment(fragment: BaseFragment) {
         val ft = childFragmentManager.beginTransaction()
         ft.hide(fragment)
-        ft.commit()
+        ft.commitAllowingStateLoss()
         fragment.onVisibleChange(false)
     }
 

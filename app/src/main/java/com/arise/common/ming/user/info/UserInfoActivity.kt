@@ -9,7 +9,6 @@ import com.arise.common.ming.config.UserConfig
 import com.arise.common.ming.databinding.ActivityUserInfoBinding
 import com.arise.common.ming.dialog.CommonDialog
 import com.arise.common.ming.dialog.EditDialog
-import com.arise.common.sdk.utils.ToastUtil
 import com.meili.component.imagepicker.MLImagePicker
 import com.meili.component.imagepicker.bean.ImageBean
 import com.meili.component.imagepicker.ui.MLImageListActivity
@@ -32,7 +31,7 @@ class UserInfoActivity : MyBaseActivity() {
         title_bar.setTitle(getString(R.string.mine_info))
         group_nickname.setOnClickListener { showModifyNicknameDialog() }
         group_portrait.setOnClickListener { showModifyPortraitDialog() }
-        login_out.setOnClickListener { showLoginOutDialog() }
+        login_out.setOnClickListener { showLogoutDialog() }
     }
 
     private fun showModifyNicknameDialog(){
@@ -47,10 +46,11 @@ class UserInfoActivity : MyBaseActivity() {
         startActivityForResult(intent, MLImagePicker.CODE_REQUEST_IMG_LIST)
     }
 
-    private fun showLoginOutDialog(){
+    private fun showLogoutDialog(){
         val dialog = CommonDialog.newInstance(getString(R.string.login_out))
         dialog.confirm = {
             UserConfig.loginOut()
+            finish()
         }
         dialog.show(fragmentManager,"nickname")
     }
