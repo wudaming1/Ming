@@ -1,6 +1,7 @@
 package com.arise.common.ming.views
 
 import android.content.Context
+import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
@@ -33,9 +34,11 @@ class TitleView : FrameLayout {
     }
 
 
+
     private fun init() {
-        val root = View.inflate(context, R.layout.title_layout, this)
-        ImmersiveUtil.makeSpaceForImmersive(findViewById(R.id.parent))
+        View.inflate(context, R.layout.title_layout, this)
+        setBackgroundColor(ContextCompat.getColor(context,R.color.main_color))
+        ImmersiveUtil.makeSpaceForImmersive(this)
         findViewById<View>(R.id.go_back).setOnClickListener {
             //todo 添加Fragment支持
             if (context is MyBaseActivity) {
