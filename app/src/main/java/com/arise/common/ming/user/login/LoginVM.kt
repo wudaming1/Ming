@@ -5,16 +5,10 @@ import android.view.View
 import android.widget.Toast
 import com.arise.common.ming.MyApplication
 import com.arise.common.ming.R
-import com.arise.common.ming.base.MessageEvent
-import com.arise.common.ming.base.PreferenceManager
-import com.arise.common.ming.config.HttpConfig
 import com.arise.common.ming.config.UserConfig
-import com.arise.common.ming.http.Method
-import com.arise.common.ming.http.MyHttpRequest
 import com.arise.common.ming.http.callback.ActionCallback
 import com.arise.common.ming.user.UserInfoBean
 import com.arise.common.ming.user.UserService
-import org.greenrobot.eventbus.EventBus
 
 
 /**

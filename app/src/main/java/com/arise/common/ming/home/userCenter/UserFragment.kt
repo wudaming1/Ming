@@ -112,7 +112,7 @@ class UserFragment : MyBaseFragment() {
                 }
                 UserConfig.user?.apply {
                     user_name.text = userName
-                    imgUrl?.apply { FrescoUtil.loadNetPic(header_image, imgUrl) }
+                    imgUrl?.apply { FrescoUtil.loadNetPic(header_image, imgUrl!!) }
                 }
                 hideFragment(unloginFragment)
 

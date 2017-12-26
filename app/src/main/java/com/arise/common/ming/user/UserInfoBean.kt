@@ -5,7 +5,7 @@ import com.arise.common.ming.base.BaseBean
 /**
  * Created by wudaming on 2017/12/12.
  */
-data class UserInfoBean(val userName:String,
-                        val imgUrl:String? = null,
+data class UserInfoBean(var userName:String,
+                        var imgUrl:String? = null,
                         val sex:String?=null,
                         val birthday:Long?=null):BaseBean()

@@ -9,7 +9,7 @@ import com.arise.common.sdk.BaseApplication
 import com.arise.common.sdk.http.HttpManager
 import com.meili.component.imagepicker.MLImagePicker
 import com.meili.component.imagepicker.view.CropImageView
-import io.realm.Realm
+//import io.realm.Realm
 import kotlin.properties.Delegates
 
 
@@ -31,7 +31,7 @@ class MyApplication : BaseApplication() {
         initHeader()
         FrescoConfig().init(this)
         initImagePicker()
-        Realm.init(this)
+//        Realm.init(this)
     }
 
 
