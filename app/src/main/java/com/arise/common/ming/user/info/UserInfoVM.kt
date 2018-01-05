@@ -3,6 +3,7 @@ package com.arise.common.ming.user.info
 import android.databinding.ObservableField
 import com.arise.common.ming.config.UserConfig
 import com.arise.common.ming.http.callback.ActionCallback
+import com.arise.common.ming.user.UserInfoBean
 import com.arise.common.ming.user.UserService
 import com.arise.common.sdk.utils.ToastUtil
 import java.io.File
@@ -23,11 +24,11 @@ class UserInfoVM(activity: UserInfoActivity){
     }
 
     fun modifyNickname(string: String){
-        UserService.modifyUserInfo(userName = string,callback = object :ActionCallback<String>{
-            override fun onSuccess(result: String?) {
+        UserService.modifyUserInfo(userName = string,callback = object :ActionCallback<UserInfoBean>{
+            override fun onSuccess(result: UserInfoBean?) {
                 result?.let {
-                    nickname.set(it)
-                    UserConfig.user?.let { it.userName = result }
+                    nickname.set(string)
+                    UserConfig.user = it
                     ToastUtil.showToast("修改成功！")
                 }
             }

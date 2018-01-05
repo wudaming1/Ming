@@ -1,6 +1,5 @@
 package com.arise.common.sdk
 
-import android.app.Application
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
@@ -9,7 +8,7 @@ import android.support.multidex.MultiDexApplication
 import com.arise.common.sdk.http.HeaderInterceptor
 import com.arise.common.sdk.http.WriteCacheControllInterceptor
 import com.arise.common.sdk.utils.FileUtil.NET_CACHE_PATH
-import com.facebook.drawee.backends.pipeline.Fresco
+import com.arise.common.sdk.utils.HTTPSUtils
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
 import okhttp3.Cache
@@ -18,7 +17,6 @@ import java.io.File
 import java.util.concurrent.TimeUnit
 import kotlin.properties.Delegates
 import com.orhanobut.logger.PrettyFormatStrategy
-import com.orhanobut.logger.FormatStrategy
 
 
 /**
@@ -68,13 +66,16 @@ open class BaseApplication : MultiDexApplication() {
         val cacheFile = File(NET_CACHE_PATH)
         val cache = Cache(cacheFile, 10 * 1024 * 1024)
 
-        httpClient = OkHttpClient.Builder()
+        val builder = OkHttpClient.Builder()
                 .connectTimeout(10, TimeUnit.SECONDS)
                 .writeTimeout(60, TimeUnit.SECONDS)
                 .readTimeout(60, TimeUnit.SECONDS)
                 .cache(cache)
                 .addInterceptor(WriteCacheControllInterceptor())
                 .addInterceptor(HeaderInterceptor())
-                .build()
+        HTTPSUtils.configHttpsCert(builder,"localhost.cer")
+
+        httpClient = builder.build()
+
     }
 }

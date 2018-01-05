@@ -22,11 +22,11 @@ object UserService {
                        , imgUrl: String = UserConfig.user?.imgUrl ?: ""
                        , sex: String = UserConfig.user?.sex ?: ""
                        , birthday: Long = UserConfig.user?.birthday ?: System.currentTimeMillis()
-                       , callback: ActionCallback<String>) {
+                       , callback: ActionCallback<UserInfoBean>) {
         val userInfo = UserInfoBean(userName,imgUrl,sex, birthday)
-        MyHttpRequest.Builder<String>()
+        MyHttpRequest.Builder<UserInfoBean>()
                 .url(userInfoUrl)
-                .clazz(String::class.java)
+                .clazz(UserInfoBean::class.java)
                 .callback(callback)
                 .method(Method.PUT)
                 .params("userInfo",JsonUtil.writeValueAsString(userInfo))

@@ -9,6 +9,7 @@ import com.arise.common.ming.config.UserConfig
 import com.arise.common.ming.http.callback.ActionCallback
 import com.arise.common.ming.user.UserInfoBean
 import com.arise.common.ming.user.UserService
+import com.orhanobut.logger.Logger
 
 
 /**
@@ -16,6 +17,7 @@ import com.arise.common.ming.user.UserService
  */
 class LoginVM(val loginActivity: LoginActivity) : View.OnClickListener {
 
+    private val TAG = LoginVM::class.java.simpleName
 
     var name = ObservableField<String>()
     var password = ObservableField<String>()
@@ -37,6 +39,7 @@ class LoginVM(val loginActivity: LoginActivity) : View.OnClickListener {
                 UserService.login(name.get(), password.get(), object : ActionCallback<String> {
                     override fun onSuccess(result: String?) {
                         result?.apply {
+                            Logger.t(TAG).e(result.toString())
                             MyApplication.instance.updateToken(result.toString())
                             authSuccess()
                         }
