@@ -7,6 +7,7 @@ import java.io.InputStream
 import java.security.GeneralSecurityException
 import java.security.KeyStore
 import java.security.cert.CertificateFactory
+import java.security.cert.X509Certificate
 import java.util.*
 import javax.net.ssl.*
 
@@ -25,13 +26,26 @@ object HTTPSUtils {
         val trustManager: X509TrustManager
         val sslSocketFactory: SSLSocketFactory
         val inputStream: InputStream
+        val trustManager1= object:X509TrustManager{
+            override fun checkClientTrusted(chain: Array<out X509Certificate>?, authType: String?) {
+            }
+
+            override fun checkServerTrusted(chain: Array<out X509Certificate>?, authType: String?) {
+            }
+
+            override fun getAcceptedIssuers(): Array<X509Certificate> {
+                return arrayOf()
+            }
+
+        }
+        val hostnameVerifier = HostnameVerifier { hostname, session -> true }
         try {
-            inputStream = mContext.assets.open(file) // 得到证书的输入流
+//            inputStream = mContext.assets.open(file) // 得到证书的输入流
             try {
 
-                trustManager = trustManagerForCertificates(inputStream)//以流的方式读入证书
+//                trustManager = trustManagerForCertificates(inputStream)//以流的方式读入证书
                 val sslContext = SSLContext.getInstance("TLS")
-                sslContext.init(null, arrayOf<TrustManager>(trustManager), null)
+                sslContext.init(null, arrayOf<TrustManager>(trustManager1), null)
                 sslSocketFactory = sslContext.socketFactory
 
             } catch (e: GeneralSecurityException) {
@@ -39,7 +53,8 @@ object HTTPSUtils {
             }
 
 
-            builder.sslSocketFactory(sslSocketFactory, trustManager)
+            builder.sslSocketFactory(sslSocketFactory, trustManager1)
+            builder.hostnameVerifier(hostnameVerifier)
         } catch (e: IOException) {
             e.printStackTrace()
         }
