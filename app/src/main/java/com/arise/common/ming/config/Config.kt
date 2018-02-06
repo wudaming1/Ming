@@ -24,7 +24,7 @@ object HttpConfig {
         base_url = if (BuildConfig.DEBUG) {
             PreferenceManager.getDebugHttpUrl()
         } else {
-            "http://172.28.17.176:8080/Servlet"
+            "http://172.28.17.176:8080"
         }
     }
 }

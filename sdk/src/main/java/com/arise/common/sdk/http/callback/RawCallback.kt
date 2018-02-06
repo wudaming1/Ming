@@ -11,12 +11,12 @@ internal abstract class RawCallback {
 
     /**
      * application/json;charset=utf-8
-     * 与服务端约定好，text/plain和application/json是String类型，其他都是文本。
+     * 与服务端约定好，text/plain和application/json是String类型，其他都是流。
      */
-    fun isFile(resp: Response):Boolean{
+    fun isString(resp: Response):Boolean{
         val contentType = resp.header("Content-Type")
         val type = contentType?.split(";")?.get(0)
-        return !("text/plain" == type || "application/json" == type)
+        return true
     }
 }
 
@@ -25,7 +25,7 @@ internal abstract class RawCallback {
  */
 internal class StringCallBack(private val realCallback: DataCallBack) : RawCallback() {
     override fun onSuccess(resp: Response) {
-        if (isFile(resp)) {
+        if (isString(resp)) {
             val message = resp.body()?.string()
             if (message.isNullOrEmpty()) {
                 realCallback.onFail(BusinessException("body empty!", BusinessException.CODE_BODY_EMPTY))

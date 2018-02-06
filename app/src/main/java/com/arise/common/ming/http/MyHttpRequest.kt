@@ -39,12 +39,10 @@ class MyHttpRequest<T : Any> private constructor() {
 
     fun parserResp(resultBean: HttpResultBean) {
         if (resultBean.status == ResultCode.SUCCESS){
-            if (clazz == String::class.java) {
-                actionCallback?.onSuccess(resultBean.data as T)
-            } else {
+
                 val parserResult = JsonUtil.readValue<T>(resultBean.data, clazz)
                 actionCallback?.onSuccess(parserResult)
-            }
+
         }else if (resultBean.error != null){
             resultBean.error?.apply {
                 when(code){
@@ -52,7 +50,7 @@ class MyHttpRequest<T : Any> private constructor() {
                     ErrorCode.DATABASE_ERR -> actionCallback?.onError(BusinessException(message, code))
                     ErrorCode.PARAM_ERR -> actionCallback?.onError(BusinessException(message, code))
                     ErrorCode.TOKEN_INVALID -> {
-                        ToastUtil.showToast("登录过期，请重新登录！")
+                        ToastUtil.showToast(message)
                         UserConfig.loginOut()
                         LoginActivity.goLogin()
                     }

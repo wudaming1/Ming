@@ -21,31 +21,41 @@ object UserService {
     fun modifyUserInfo(userName: String = UserConfig.user?.userName ?: ""
                        , imgUrl: String = UserConfig.user?.imgUrl ?: ""
                        , sex: String = UserConfig.user?.sex ?: ""
-                       , birthday: Long = UserConfig.user?.birthday ?: System.currentTimeMillis()
+                       , birthday: Long = UserConfig.user?.birthday ?: 0
                        , callback: ActionCallback<UserInfoBean>) {
-        val userInfo = UserInfoBean(userName,imgUrl,sex, birthday)
-        MyHttpRequest.Builder<UserInfoBean>()
+        val builder = MyHttpRequest.Builder<UserInfoBean>()
                 .url(userInfoUrl)
                 .clazz(UserInfoBean::class.java)
                 .callback(callback)
                 .method(Method.PUT)
-                .params("userInfo",JsonUtil.writeValueAsString(userInfo))
-                .build()
-                .execute()
+
+        if (userName.isNotEmpty()) {
+            builder.params("name", userName)
+        }
+        if (imgUrl.isNotEmpty()) {
+            builder.params("imgUrl", imgUrl)
+        }
+        if (sex.isNotEmpty()) {
+            builder.params("sex", sex)
+        }
+        if (birthday != 0L) {
+            builder.params("birthday", birthday.toString())
+        }
+        builder.build().execute()
     }
 
-    fun modifyPassword(password: String, callback: ActionCallback<String>){
+    fun modifyPassword(password: String, callback: ActionCallback<String>) {
         MyHttpRequest.Builder<String>()
                 .url(userInfoUrl)
                 .clazz(String::class.java)
                 .callback(callback)
                 .method(Method.PATCH)
-                .params("password",password)
+                .params("password", password)
                 .build()
                 .execute()
     }
 
-    fun modifyPortrait(file: File,callback: ActionCallback<String>){
+    fun modifyPortrait(file: File, callback: ActionCallback<String>) {
         MyHttpRequest.Builder<String>()
                 .url(userInfoUrl)
                 .clazz(String::class.java)
