@@ -8,8 +8,6 @@ import com.arise.common.ming.base.MyBaseActivity
 import com.arise.common.ming.config.ConfigActivity
 import com.arise.common.ming.home.userCenter.UserFragment
 import com.arise.common.sdk.utils.ToastUtil
-import com.meili.component.imagepicker.MLImagePicker
-import com.meili.component.imagepicker.ui.MLImageListActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -29,8 +27,6 @@ class MainActivity : MyBaseActivity(),UserFragment.OnFragmentInteractionListener
         }
 
         toast_same.setOnClickListener {
-            val intent = Intent(this, MLImageListActivity::class.java)
-            startActivityForResult(intent, MLImagePicker.CODE_REQUEST_IMG_LIST)
         }
 
         toast_diff.setOnClickListener { ToastUtil.showToast("我是不同的${System.currentTimeMillis()}") }

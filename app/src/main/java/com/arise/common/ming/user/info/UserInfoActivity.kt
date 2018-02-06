@@ -9,9 +9,6 @@ import com.arise.common.ming.config.UserConfig
 import com.arise.common.ming.databinding.ActivityUserInfoBinding
 import com.arise.common.ming.dialog.CommonDialog
 import com.arise.common.ming.dialog.EditDialog
-import com.meili.component.imagepicker.MLImagePicker
-import com.meili.component.imagepicker.bean.ImageBean
-import com.meili.component.imagepicker.ui.MLImageListActivity
 import kotlinx.android.synthetic.main.activity_user_info.*
 import java.io.File
 
@@ -41,9 +38,7 @@ class UserInfoActivity : MyBaseActivity() {
     }
 
     private fun showModifyPortraitDialog(){
-        MLImagePicker.getInstance().chooseType = MLImagePicker.TYPE_CHOOSE_SINGLE
-        val intent = Intent(this, MLImageListActivity::class.java)
-        startActivityForResult(intent, MLImagePicker.CODE_REQUEST_IMG_LIST)
+
     }
 
     private fun showLogoutDialog(){
@@ -58,13 +53,6 @@ class UserInfoActivity : MyBaseActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == MLImagePicker.CODE_REQUEST_IMG_LIST){
-            if (resultCode == MLImagePicker.CODE_RESULT_IMG_LIST){
-                data?.let {
-                    val imgList = data.getParcelableArrayListExtra<ImageBean>(MLImagePicker.RESULT_IMG_LIST)
-                    viewModule.modifyPortrait(File(imgList[0].imgPath))
-                }
-            }
-        }
+
     }
 }

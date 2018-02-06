@@ -1,1 +1,1 @@
-include ':app', ':sdk',':imagepicker'
+include ':app', ':sdk'

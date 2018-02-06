@@ -1,15 +1,11 @@
 package com.arise.common.ming
 
-import android.graphics.Color
+//import io.realm.Realm
 import android.os.Build
-import com.arise.common.ming.base.MyImageLoader
 import com.arise.common.ming.base.PreferenceManager
 import com.arise.common.ming.config.FrescoConfig
 import com.arise.common.sdk.BaseApplication
 import com.arise.common.sdk.http.HttpManager
-import com.meili.component.imagepicker.MLImagePicker
-import com.meili.component.imagepicker.view.CropImageView
-//import io.realm.Realm
 import kotlin.properties.Delegates
 
 
@@ -51,19 +47,7 @@ class MyApplication : BaseApplication() {
 
 
     private fun initImagePicker() {
-        MLImagePicker.getInstance()
-                .setImageLoadFrame(MyImageLoader())
-                .setImageMaxSize(9)
-                .setChooseType(MLImagePicker.TYPE_CHOOSE_MULTIPLE)
-                .setNavigationIconRes(0)
-                .setOutputY(800)
-                .setOutputX(800)
-                .setFocusHeight(800)
-                .setFocusWeight(800)
-                .setLight(false)
-                .setToolbarColor(Color.BLACK)
-                .setStatusBarColor(Color.BLACK)
-                .setFocusStyle(CropImageView.Style.CIRCLE).isSaveRectangle = true
+
     }
 
 
