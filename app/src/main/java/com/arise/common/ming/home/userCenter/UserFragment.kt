@@ -13,6 +13,7 @@ import com.arise.common.ming.ImmersiveUtil
 import com.arise.common.ming.R
 import com.arise.common.ming.base.MessageEvent
 import com.arise.common.ming.base.MyBaseFragment
+import com.arise.common.ming.config.ConfigActivity
 import com.arise.common.ming.config.UserConfig
 import com.arise.common.ming.user.info.UserInfoActivity
 import com.arise.common.ming.user.unlogin.UnLoginFragment
@@ -97,6 +98,10 @@ class UserFragment : MyBaseFragment() {
         ft.add(R.id.unlogin, unloginFragment)
         ft.commit()
         refreshLoginState(if (UserConfig.isLogin) MessageEvent.LOGIN else MessageEvent.UNLOGIN)
+        go_config.setOnClickListener {
+            val intent = Intent(context, ConfigActivity::class.java)
+            context.startActivity(intent)
+        }
 
     }
 

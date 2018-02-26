@@ -17,6 +17,7 @@ import java.io.File
 object UserService {
 
     private val userInfoUrl = HttpConfig.base_url + "/auth/userInfo"
+    private val headImg = HttpConfig.base_url+ "/auth/headImg"
 
     fun modifyUserInfo(userName: String = UserConfig.user?.userName ?: ""
                        , imgUrl: String = UserConfig.user?.imgUrl ?: ""
@@ -57,10 +58,10 @@ object UserService {
 
     fun modifyPortrait(file: File, callback: ActionCallback<String>) {
         MyHttpRequest.Builder<String>()
-                .url(userInfoUrl)
+                .url(headImg)
                 .clazz(String::class.java)
                 .callback(callback)
-                .method(Method.PUT)
+                .method(Method.POST)
                 .uploadFile(file)
                 .build()
                 .execute()

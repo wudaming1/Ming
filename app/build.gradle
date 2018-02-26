@@ -50,12 +50,17 @@ dependencies {
 //    implementation 'com.github.vicpinm:krealmextensions:1.0.4'
 
     implementation project(':sdk')
+    implementation project(':imagepicker')
 
     implementation 'com.android.support:support-v4:26.1.0'
     kapt 'com.android.databinding:compiler:3.0.1'
 
 //    implementation 'com.jakewharton:butterknife:8.8.1'
 //    kapt 'com.jakewharton:butterknife-compiler:8.8.1'
+
+    //ijkplayer sdk
+    compile 'tv.danmaku.ijk.media:ijkplayer-java:0.8.8'
+    compile 'tv.danmaku.ijk.media:ijkplayer-armv7a:0.8.8'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'

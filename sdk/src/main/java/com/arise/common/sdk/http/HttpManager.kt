@@ -56,8 +56,13 @@ class HttpManager(private val okHttpClient: OkHttpClient) {
     }
 
     private fun createBody(type: Type, file: File?, params: Map<String, String>): RequestBody {
+        //todo 这个地方问题很大。。。
         return if (type == Type.File) {
-            RequestBody.create(MediaType.parse("application/octet-stream"), file!!)
+            val build = MultipartBody.Builder()
+            build.setType(MultipartBody.FORM)
+            build.addPart(Headers.of("Content-Disposition", "form-data; name=\"file\"; filename=\"" + file!!.name + "\""),
+                    createFilePartBody(file))
+            build.build()
         } else {
             val bodyBuilder = FormBody.Builder()
             for ((key, value) in params) {
@@ -65,6 +70,16 @@ class HttpManager(private val okHttpClient: OkHttpClient) {
             }
             bodyBuilder.build()
         }
+    }
+
+    private fun createFilePartBody(file: File): RequestBody{
+        val extend = file.name.split(".").last()
+        var mediaType = "image/jpg"
+        when(extend){
+            "jpg" -> mediaType = "image/jpg"
+            "png" -> mediaType = "image/png"
+        }
+        return RequestBody.create(MediaType.parse(mediaType), file)
     }
 
 
