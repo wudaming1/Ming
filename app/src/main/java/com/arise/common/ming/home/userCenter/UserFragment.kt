@@ -61,7 +61,6 @@ class UserFragment : MyBaseFragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        Log.e(TAG, "onAttach")
         if (context is OnFragmentInteractionListener) {
             mListener = context
         } else {
@@ -81,7 +80,6 @@ class UserFragment : MyBaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        Log.e(TAG, "onCreateView")
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_user, container, false)
         return rootView
@@ -149,7 +147,6 @@ class UserFragment : MyBaseFragment() {
 
     override fun onDetach() {
         super.onDetach()
-        Log.e(TAG, "onDetach")
         mListener = null
     }
 

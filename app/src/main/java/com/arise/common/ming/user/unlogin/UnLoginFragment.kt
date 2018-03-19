@@ -22,10 +22,10 @@ class UnLoginFragment : MyBaseFragment() {
     private val TAG = UnLoginFragment::class.java.simpleName
 
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        return inflater!!.inflate(R.layout.fragment_unlogin, container, false)
+        return inflater.inflate(R.layout.fragment_unlogin, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
