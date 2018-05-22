@@ -2,7 +2,6 @@ package com.arise.common.ming.home
 
 import android.net.Uri
 import android.os.Bundle
-import android.support.v4.app.FragmentTabHost
 import com.arise.common.ming.R
 import com.arise.common.ming.base.MyBaseActivity
 import com.arise.common.ming.component.IntensiveFragmentTabHost
@@ -19,24 +18,21 @@ class MainActivity : MyBaseActivity(), UserFragment.OnFragmentInteractionListene
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        initView()
-        init()
+        initTabHost()
 
     }
 
-    private fun initView() {
+    private fun initTabHost() {
         mTabHost = findViewById(R.id.tabhost)
         mTabHost.setup(this, supportFragmentManager, R.id.fragment)
         mTabHost.addTab(mTabHost.newTabSpec("news").setIndicator("新闻"), NewsFragment::class.java, null)
         mTabHost.addTab(mTabHost.newTabSpec("video").setIndicator("视频"), VideoFragment::class.java, null)
         mTabHost.addTab(mTabHost.newTabSpec("music").setIndicator("音乐"), MusicFragment::class.java, null)
-
-    }
-
-    private fun init() {
         mTabHost.currentTab = 0
 
+
     }
+
 
     override fun onFragmentInteraction(uri: Uri) {
 

@@ -29,7 +29,7 @@ class EditDialog : DialogFragment() {
     }
 
     var cancel: (() -> Unit)? = null
-    var confirm: ((s:String) -> Unit)? = null
+    var confirm: ((s: String) -> Unit)? = null
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -39,27 +39,41 @@ class EditDialog : DialogFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        initTitle()
+        initHint()
+        initCancelCallback()
+        initConfirmCallback()
+    }
 
+    private fun initConfirmCallback() {
+        confirm_btn.setOnClickListener {
+            if (content.text.isNullOrBlank()) {
+                ToastUtil.showToast(getString(R.string.input_empty))
+            } else {
+                confirm?.invoke(content.text.toString())
+                dismiss()
+            }
+        }
+    }
+
+    private fun initCancelCallback() {
+        cancel_btn.setOnClickListener {
+            cancel?.invoke()
+            dismiss()
+        }
+    }
+
+    private fun initHint() {
+        if (!arguments.getString(HINT, "").isBlank())
+            content.hint = arguments.getString(HINT, "")
+    }
+
+    private fun initTitle() {
         if (arguments.getString(TITLE, "").isBlank()) {
             title.visibility = View.GONE
         } else {
             title.visibility = View.VISIBLE
             title.text = arguments.getString(TITLE, "")
-        }
-        if (!arguments.getString(HINT, "").isBlank())
-            content.hint = arguments.getString(HINT, "")
-
-        cancel_btn.setOnClickListener {
-            cancel?.invoke()
-            dismiss()
-        }
-        confirm_btn.setOnClickListener {
-            if (content.text.isNullOrBlank()){
-                ToastUtil.showToast(getString(R.string.input_empty))
-            }else {
-                confirm?.invoke(content.text.toString())
-                dismiss()
-            }
         }
     }
 }

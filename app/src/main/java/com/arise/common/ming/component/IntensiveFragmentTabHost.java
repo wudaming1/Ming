@@ -22,9 +22,7 @@ import java.util.ArrayList;
 
 /**
  * Created by wudaming on 2018/3/19.
- * 增强型FragmentTabHost
- * 1、保存Fragment实力，将attach，detach操作变为show、hide
- * 2、实现tab切换不依赖于index，未实现。
+ * 增强型FragmentTabHost,保存Fragment实力，将attach，detach操作变为show、hide
  */
 
 public class IntensiveFragmentTabHost extends TabHost implements TabHost.OnTabChangeListener {

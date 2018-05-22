@@ -36,7 +36,7 @@ class LoginVM(val loginActivity: LoginActivity) : View.OnClickListener {
 
         when (v.id) {
             R.id.login -> {
-                UserService.login(name.get(), password.get(), object : ActionCallback<String> {
+                UserService.login(name.get()!!, password.get()!!, object : ActionCallback<String> {
                     override fun onSuccess(result: String?) {
                         result?.apply {
                             Logger.t(TAG).e(result.toString())
@@ -48,7 +48,7 @@ class LoginVM(val loginActivity: LoginActivity) : View.OnClickListener {
                 })
             }
             R.id.register -> {
-                UserService.register(name.get(), password.get(), object : ActionCallback<String> {
+                UserService.register(name.get()!!, password.get()!!, object : ActionCallback<String> {
                     override fun onSuccess(result: String?) {
                         result?.apply {
                             MyApplication.instance.updateToken(result.toString())

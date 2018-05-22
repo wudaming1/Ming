@@ -24,8 +24,14 @@ object HttpConfig {
         base_url = if (BuildConfig.DEBUG) {
             PreferenceManager.getDebugHttpUrl()
         } else {
-            "http://172.28.17.176:8080"
+            "http://140.143.239.14:8080/aries_server/"
         }
+    }
+
+    fun modifyBaseUrl(url: String) {
+        base_url = url
+        PreferenceManager.saveDebugHttpUrl(url)
+
     }
 }
 
