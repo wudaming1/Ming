@@ -19,7 +19,7 @@ class MainActivity : MyBaseActivity(), UserFragment.OnFragmentInteractionListene
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initTabHost()
-
+        initTitle(show = false)
     }
 
     private fun initTabHost() {

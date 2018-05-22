@@ -1,20 +1,20 @@
 package com.arise.common.ming.views
 
 import android.content.Context
-import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
-import android.widget.TextView
 import com.arise.common.ming.ImmersiveUtil
 import com.arise.common.ming.R
 import com.arise.common.ming.base.MyBaseActivity
+import kotlinx.android.synthetic.main.title_layout.view.*
 
 /**
  * 为了实现全屏模式，即不显示actionbar，替代actionbar的view
- * 目前自能添加到Activity，还不支持Fragment
+ * 目前只能添加到Activity，还不支持Fragment
  */
 class TitleView : FrameLayout {
+
 
 
     constructor(context: Context) : super(context) {
@@ -29,15 +29,10 @@ class TitleView : FrameLayout {
         init()
     }
 
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) {
-        init()
-    }
-
 
 
     private fun init() {
         View.inflate(context, R.layout.title_layout, this)
-        setBackgroundColor(ContextCompat.getColor(context,R.color.main_color))
         ImmersiveUtil.makeSpaceForImmersive(this)
         findViewById<View>(R.id.go_back).setOnClickListener {
             //todo 添加Fragment支持
@@ -49,8 +44,12 @@ class TitleView : FrameLayout {
 
     }
 
-    fun setTitle(title: String) {
-        (findViewById<TextView>(R.id.title)).setText(title)
+    fun setTitle(titleName: String) {
+        title.text = titleName
+    }
+
+    fun setTitle(id: Int) {
+        title.setText(id)
     }
 
 

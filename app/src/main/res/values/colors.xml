@@ -8,12 +8,16 @@
     <color name="bg_196e6e6e">#196E6E6E</color>
 
     <!--background-->
+
+    <!--整体页面背景-->
+    <color name="page_bg">#dfd9d9</color>
+
     <color name="bg_white">#ffffffff</color>
     <color name="bg_gray">#88808080</color>
     <color name="bg_yellow">#ffe600</color>
 
     <!--font按照色值大小排序-->
-    <color name="font_black">#000000</color>
+    <color name="font_black">#1e1d1d</color>
     <color name="font_gray_dark">#404040</color>
     <color name="font_gray">#808080</color>
     <color name="font_gray_light">#bfbfbf</color>
